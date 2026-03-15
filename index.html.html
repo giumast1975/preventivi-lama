@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LAMA OPTICAL — Preventivi</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#ffffff;--text:#212529;--dark:#323334;--accent:#1069f9;--accentH:#065dea;--sec:#737678;--border:#cbcccd;--surf:#f8f9fb;--surf2:#f0f2f5;--gold:#C8A96E;--ok:#16a34a;--r:10px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',sans-serif;background:var(--surf);color:var(--text);min-height:100vh;}
+
+.hdr{background:linear-gradient(135deg,#1a1a1a,#2d2d2d);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.3);}
+.hdr-logo{color:var(--gold);font-size:20px;font-weight:800;letter-spacing:3px;}
+.hdr-sub{color:#888;font-size:10px;letter-spacing:1px;}
+.hdr-right{display:flex;align-items:center;gap:10px;}
+.badge{font-size:11px;padding:4px 12px;border-radius:20px;font-weight:700;}
+.badge.empty{background:rgba(255,255,255,.1);color:#888;}
+.badge.ok{background:rgba(22,163,74,.2);color:#4ade80;}
+
+.wrap{max-width:1180px;margin:0 auto;padding:24px 20px;}
+.ptitle{font-size:11px;font-weight:800;color:var(--sec);letter-spacing:2px;text-transform:uppercase;margin-bottom:18px;}
+.grid{display:grid;grid-template-columns:340px 1fr;gap:22px;align-items:start;}
+@media(max-width:860px){.grid{grid-template-columns:1fr;}}
+
+.card{background:var(--bg);border-radius:var(--r);border:1px solid var(--border);box-shadow:0 2px 10px rgba(0,0,0,.06);overflow:hidden;}
+.ch{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
+.ch-ico{width:30px;height:30px;border-radius:7px;background:var(--surf2);display:flex;align-items:center;justify-content:center;font-size:15px;}
+.ch-title{font-size:13px;font-weight:800;color:var(--dark);}
+.cb{padding:18px;}
+
+.fsec{margin-bottom:18px;}
+.fsec-lbl{font-size:10px;font-weight:800;color:var(--sec);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.fsec-lbl::after{content:'';flex:1;height:1px;background:var(--border);}
+
+.field{margin-bottom:11px;}
+.field label{display:block;font-size:12px;font-weight:700;color:var(--dark);margin-bottom:4px;}
+.req{color:var(--accent);margin-left:2px;}
+.field input,.field select{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:7px;font-size:13px;font-family:inherit;color:var(--text);background:var(--bg);transition:border .15s,box-shadow .15s;appearance:none;}
+.field input:focus,.field select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(16,105,249,.1);}
+.field input.err,.field select.err{border-color:#ef4444;}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.sw{position:relative;}
+.sw::after{content:'▾';position:absolute;right:11px;top:50%;transform:translateY(-50%);color:var(--sec);pointer-events:none;font-size:11px;}
+
+.tg{display:flex;border:1.5px solid var(--border);border-radius:7px;overflow:hidden;}
+.tg button{flex:1;padding:8px 4px;border:none;background:var(--bg);font-size:12px;font-weight:700;color:var(--sec);cursor:pointer;transition:all .15s;font-family:inherit;border-right:1px solid var(--border);}
+.tg button:last-child{border-right:none;}
+.tg button.on{background:var(--accent);color:#fff;}
+.tg button:hover:not(.on){background:var(--surf2);}
+
+.btn-gen{width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:800;font-family:inherit;cursor:pointer;transition:background .15s,transform .1s;margin-top:6px;}
+.btn-gen:hover{background:var(--accentH);transform:translateY(-1px);}
+.btn-gen:active{transform:translateY(0);}
+
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;text-align:center;color:var(--sec);}
+.empty-ico{font-size:44px;margin-bottom:10px;opacity:.35;}
+.empty-txt{font-size:14px;font-weight:700;}
+.empty-sub{font-size:12px;margin-top:3px;opacity:.7;}
+
+.ph{background:linear-gradient(135deg,#1a1a1a,#2d2d2d);border-radius:var(--r) var(--r) 0 0;padding:18px 22px;text-align:center;}
+.ph-brand{color:var(--gold);font-size:17px;font-weight:800;letter-spacing:3px;}
+.ph-neg{color:#bbb;font-size:11px;margin-top:4px;}
+.ph-date{color:#666;font-size:10px;margin-top:3px;}
+
+.pmeta{background:var(--bg);padding:10px 20px;border-left:1px solid var(--border);border-right:1px solid var(--border);}
+.pmeta-nome{font-size:13px;font-weight:700;color:var(--dark);}
+.pmeta-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px;}
+.tag{background:var(--surf2);border:1px solid var(--border);border-radius:20px;padding:2px 10px;font-size:10px;font-weight:700;color:var(--sec);}
+
+.props{display:grid;grid-template-columns:1fr 1fr 1fr;background:var(--bg);border-left:1px solid var(--border);border-right:1px solid var(--border);}
+@media(max-width:640px){.props{grid-template-columns:1fr;}}
+
+.pc{padding:18px 14px;border-right:1px solid var(--border);position:relative;animation:fu .3s ease both;}
+.pc:last-child{border-right:none;}
+.pc.cons{background:linear-gradient(180deg,#fffbf4,#fff);outline:2px solid var(--gold);outline-offset:-1px;z-index:1;}
+@keyframes fu{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+.pc:nth-child(1){animation-delay:.05s;}
+.pc:nth-child(2){animation-delay:.12s;}
+.pc:nth-child(3){animation-delay:.19s;}
+
+.pc-badge{position:absolute;top:0;left:0;right:0;background:var(--gold);color:#fff;text-align:center;font-size:9px;font-weight:800;letter-spacing:2px;padding:3px;text-transform:uppercase;}
+.pc-ico{font-size:22px;text-align:center;margin-bottom:3px;margin-top:10px;}
+.pc-tit{font-size:13px;font-weight:800;color:var(--dark);text-align:center;margin-bottom:5px;}
+.pc-desc{font-size:11px;color:var(--sec);line-height:1.5;text-align:center;margin-bottom:11px;min-height:30px;}
+.pc-prod{background:var(--surf);border:1px solid var(--border);border-radius:7px;padding:9px 11px;margin-bottom:12px;}
+.pc-forn{font-size:11px;font-weight:800;color:var(--dark);}
+.pc-mod{font-size:11px;color:var(--text);margin-top:1px;}
+.pc-tratt{font-size:10px;color:var(--sec);margin-top:3px;}
+.pc-pr{text-align:center;}
+.pc-sub{font-size:11px;color:var(--sec);margin-bottom:5px;}
+.pc-div{height:1px;background:var(--gold);width:36%;margin:5px auto;}
+.pc-lbl{font-size:9px;color:var(--sec);text-transform:uppercase;letter-spacing:1px;}
+.pc-tot{font-size:26px;font-weight:800;color:var(--dark);line-height:1;}
+.pc-val{font-size:11px;color:var(--sec);}
+.pc-rate{margin-top:9px;padding:7px;background:var(--surf2);border-radius:6px;font-size:10px;color:var(--sec);text-align:center;line-height:1.6;}
+.pc-rate strong{color:var(--dark);}
+
+.pfoot{background:var(--bg);border:1px solid var(--border);border-top:none;border-radius:0 0 var(--r) var(--r);padding:14px 20px;}
+.pag-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.pag-box{background:var(--surf);border-radius:8px;padding:11px;text-align:center;border:1px solid var(--border);}
+.pag-box strong{font-size:13px;display:block;margin-bottom:2px;}
+.pag-box span{font-size:11px;color:var(--sec);}
+.btn-print{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px;background:var(--dark);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:800;cursor:pointer;font-family:inherit;transition:background .15s;}
+.btn-print:hover{background:#111;}
+.pval{text-align:center;padding:8px;font-size:11px;color:var(--sec);border-top:1px solid var(--border);margin-top:8px;}
+
+.nav{display:flex;gap:4px;}
+.nav-btn{padding:6px 14px;border-radius:6px;border:none;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s;}
+.nav-btn.active{background:var(--accent);color:#fff;}
+.nav-btn:not(.active){background:rgba(255,255,255,.1);color:#aaa;}
+.nav-btn:not(.active):hover{background:rgba(255,255,255,.15);color:#fff;}
+
+.page{display:none;}.page.active{display:block;}
+
+/* ARCHIVIO */
+.arch-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+.arch-toolbar-title{font-size:11px;font-weight:800;color:var(--sec);letter-spacing:2px;text-transform:uppercase;}
+.arch-actions{display:flex;gap:8px;}
+.btn-sm{padding:7px 14px;border-radius:6px;border:none;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s;}
+.btn-sm.outline{background:var(--bg);border:1.5px solid var(--border);color:var(--dark);}
+.btn-sm.outline:hover{border-color:var(--accent);color:var(--accent);}
+.btn-sm.danger{background:#fff0f0;border:1.5px solid #fca5a5;color:#dc2626;}
+.btn-sm.danger:hover{background:#fee2e2;}
+.btn-sm.primary{background:var(--accent);color:#fff;}
+.btn-sm.primary:hover{background:var(--accentH);}
+
+.arch-empty{text-align:center;padding:60px 20px;color:var(--sec);}
+.arch-empty-ico{font-size:40px;opacity:.3;margin-bottom:10px;}
+
+.arch-table-wrap{overflow-x:auto;}
+table.arch{width:100%;border-collapse:collapse;font-size:12px;}
+table.arch th{background:var(--surf2);padding:9px 12px;text-align:left;font-weight:800;color:var(--dark);border-bottom:2px solid var(--border);white-space:nowrap;}
+table.arch td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;}
+table.arch tr:hover td{background:var(--surf);}
+.arch-cliente{font-weight:700;color:var(--dark);}
+.arch-sub{font-size:11px;color:var(--sec);margin-top:1px;}
+.arch-prezzo{font-weight:800;color:var(--dark);}
+.arch-badge{display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700;}
+.arch-badge.smart{background:#dbeafe;color:#1d4ed8;}
+.arch-badge.premium{background:#fef3c7;color:#92400e;}
+.arch-badge.top{background:#ede9fe;color:#5b21b6;}
+.arch-badge.none{background:var(--surf2);color:var(--sec);}
+
+.scelta-sel{padding:5px 8px;border:1.5px solid var(--border);border-radius:6px;font-size:11px;font-family:inherit;cursor:pointer;background:var(--bg);}
+.scelta-sel:focus{outline:none;border-color:var(--accent);}
+
+.btn-mail-arch{background:none;border:none;cursor:pointer;font-size:16px;padding:2px 6px;border-radius:4px;transition:background .15s;}
+.btn-mail-arch:hover{background:var(--surf2);}
+.btn-del-arch{background:none;border:none;cursor:pointer;font-size:14px;padding:2px 6px;border-radius:4px;color:#dc2626;transition:background .15s;}
+.btn-del-arch:hover{background:#fee2e2;}
+
+/* AZIONI PREVENTIVO */
+.prev-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+.btn-action{display:flex;align-items:center;justify-content:center;gap:7px;padding:11px;border:none;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;font-family:inherit;transition:all .15s;}
+.btn-action.print{background:var(--dark);color:#fff;}
+.btn-action.print:hover{background:#111;}
+.btn-action.mail{background:#e8f0fe;color:var(--accent);border:1.5px solid #c7d9fc;}
+.btn-action.mail:hover{background:#d2e3fc;}
+
+
+.toast{position:fixed;bottom:22px;right:22px;padding:11px 18px;border-radius:8px;font-size:13px;font-weight:700;box-shadow:0 4px 20px rgba(0,0,0,.15);z-index:999;animation:ti .3s ease;color:#fff;}
+.toast.ok{background:var(--ok);}
+.toast.err{background:#ef4444;}
+.toast.info{background:var(--dark);}
+@keyframes ti{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+@media print{
+  .hdr,.form-panel,.ptitle,.prev-actions,.hdr-right,.nav,.pval{display:none!important;}
+  .wrap{padding:0;max-width:100%;}
+  .grid{grid-template-columns:1fr;}
+  .props{grid-template-columns:1fr 1fr 1fr!important;}
+  body{background:#fff;}
+  #pageArchivio{display:none!important;}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div>
+    <div class="hdr-logo">LAMA OPTICAL</div>
+    <div class="hdr-sub">GENERATORE PREVENTIVI</div>
+  </div>
+  <div class="hdr-right">
+    <div class="nav">
+      <button class="nav-btn active" onclick="showPage('preventivo')">✨ Nuovo</button>
+      <button class="nav-btn" onclick="showPage('archivio')" id="navArchivio">🗂 Archivio <span id="archCount"></span></button>
+    </div>
+    <div class="badge ok" id="listinoStatus">508 prodotti caricati</div>
+  </div>
+</header>
+
+<div id="pagePreventivo" class="page active">
+<div class="wrap">
+  <div class="ptitle">Nuovo Preventivo</div>
+  <div class="grid">
+
+    <!-- FORM -->
+    <div class="form-panel">
+      <div class="card">
+        <div class="ch"><div class="ch-ico">👤</div><div class="ch-title">Dati Cliente &amp; Prescrizione</div></div>
+        <div class="cb">
+
+          <div class="fsec">
+            <div class="fsec-lbl">Cliente</div>
+            <div class="field"><label>Nome cliente</label><input type="text" id="nomeCliente" placeholder="Es. Mario Rossi"></div>
+            <div class="frow">
+              <div class="field"><label>Email<span class="req">*</span></label><input type="email" id="email" placeholder="email@esempio.it"></div>
+              <div class="field"><label>Telefono<span class="req">*</span></label><input type="tel" id="telefono" placeholder="011 000 0000"></div>
+            </div>
+            <div class="field"><label>Negozio<span class="req">*</span></label>
+              <div class="sw"><select id="negozio">
+                <option value="">— Seleziona sede —</option>
+                <option>TORINO LINGOTTO</option>
+                <option>TORINO TODREAM</option>
+                <option>SETTIMO CIELO RETAIL PARK</option>
+                <option>TORINO OUTLET VILLAGE</option>
+                <option>NICHELINO I VIALI</option>
+                <option>BIELLA GLI ORSI</option>
+              </select></div>
+            </div>
+          </div>
+
+          <div class="fsec">
+            <div class="fsec-lbl">Prescrizione</div>
+            <div class="field"><label>Tipo lente<span class="req">*</span></label>
+              <div class="sw"><select id="tipoLente" onchange="aggiornaCampi()">
+                <option value="">— Seleziona —</option>
+                <option value="MONOFOCALE">Monofocale</option>
+                <option value="MONOFOCALE EVOLUTA">Monofocale Evoluta</option>
+                <option value="PROGRESSIVA">Progressiva</option>
+                <option value="PROGRESSIVA OFFICE">Progressiva Office</option>
+              </select></div>
+            </div>
+            <div class="field" id="fieldUso"><label>Uso<span class="req">*</span></label>
+              <div class="sw"><select id="usoSel" onchange="aggiornaFoto()">
+                <option value="NORMALE">Normale (vista)</option>
+                <option value="LUCE BLU">Luce Blu</option>
+                <option value="SOLE">Sole colorata</option>
+                <option value="SOLE SPECCHIATO">Sole Specchiato</option>
+                <option value="SOLE POLARIZZATO">Sole Polarizzato</option>
+                <option value="TRANSITION">Transition</option>
+                <option value="TRANSITION POLARIZZATA">Transition Polarizzata</option>
+              </select></div>
+            </div>
+            <div class="field" id="fieldFoto"><label>Fotocromatico<span class="req">*</span></label>
+              <div class="tg" id="fotoTg">
+                <button class="on" data-v="NO" onclick="setTg('fotoTg',this)">No</button>
+                <button data-v="SI" onclick="setTg('fotoTg',this)">Sì</button>
+              </div>
+            </div>
+            <div class="frow">
+              <div class="field"><label>Indice<span class="req">*</span></label>
+                <div class="sw"><select id="indice">
+                  <option value="">— Seleziona —</option>
+                  <option value="1.5">1.50</option>
+                  <option value="1.6">1.60</option>
+                  <option value="1.67">1.67</option>
+                  <option value="1.74">1.74</option>
+                </select></div>
+              </div>
+              <div class="field"><label>Fornitore<span class="req">*</span></label>
+                <div class="sw"><select id="fornitore">
+                  <option value="TUTTI">Tutti</option>
+                  <option value="ESSILOR">Essilor</option>
+                  <option value="PERFETTA">Perfetta</option>
+                  <option value="DAI">Dai</option>
+                </select></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="fsec">
+            <div class="fsec-lbl">Prezzi</div>
+            <div class="frow">
+              <div class="field"><label>Montatura €<span class="req">*</span></label><input type="number" id="montatura" placeholder="0.00" min="0" step="0.01"></div>
+              <div class="field"><label>Budget totale €<span class="req">*</span></label><input type="number" id="budget" placeholder="0.00" min="0" step="0.01"></div>
+            </div>
+          </div>
+
+          <button class="btn-gen" onclick="genera()">✨ Genera Preventivo</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- OUTPUT -->
+    <div id="out">
+      <div class="card" style="border:none;box-shadow:none;background:transparent;">
+        <div class="empty">
+          <div class="empty-ico">🔍</div>
+          <div class="empty-txt">Il preventivo apparirà qui</div>
+          <div class="empty-sub">Compila il form e premi Genera Preventivo</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div><!-- /pagePreventivo -->
+
+<!-- ARCHIVIO PAGE -->
+<div id="pageArchivio" class="page">
+<div class="wrap">
+  <div class="arch-toolbar">
+    <div class="arch-toolbar-title">🗂 Archivio Preventivi</div>
+    <div class="arch-actions">
+      <button class="btn-sm outline" onclick="esportaCSV()">⬇️ Esporta CSV</button>
+      <button class="btn-sm danger" onclick="svuotaArchivio()">🗑 Svuota</button>
+    </div>
+  </div>
+
+  <!-- CONFIG GAS -->
+  <div class="card" style="margin-bottom:16px;">
+    <div class="ch"><div class="ch-ico">🔗</div><div class="ch-title">Connessione Google Sheets</div></div>
+    <div class="cb" style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;">
+      <div class="field" style="flex:1;min-width:260px;margin:0;">
+        <label>URL Web App Google Apps Script</label>
+        <input type="text" id="gasUrlInput" placeholder="https://script.google.com/macros/s/.../exec" style="font-size:11px;">
+      </div>
+      <button class="btn-sm primary" onclick="salvaGasUrl()" style="margin-bottom:1px;">Salva URL</button>
+      <button class="btn-sm outline" onclick="testGasUrl()" style="margin-bottom:1px;">🧪 Testa</button>
+    </div>
+    <div style="padding:0 18px 12px;font-size:11px;color:var(--sec);">
+      Ogni preventivo generato verrà salvato automaticamente nel tuo Google Sheet. 
+      <strong>L'URL viene salvato nel browser</strong> e rimane anche aggiornando il file.
+    </div>
+  </div>
+
+  <div class="card">
+    <div id="archivioContent">
+      <div class="arch-empty"><div class="arch-empty-ico">📋</div><div>Nessun preventivo salvato</div></div>
+    </div>
+  </div>
+</div>
+</div><!-- /pageArchivio -->
+
+<script>
+// ============================================================
+// LISTINO EMBEDDED
+// ============================================================
+var LISTINO = [{"tipoLente":"MONOFOCALE","modello":"CR SFERICA MAX+ 1.5","indice":1.5,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":60.0,"uso":"NORMALE","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"CR COLORATA HARD 1.5","indice":1.5,"fornitore":"PERFETTA","trattamento":"HARD","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":60.0,"uso":"SOLE","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"CR COLORATA MAX+ 1.5","indice":1.5,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":80.0,"uso":"SOLE","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"CR SFERICA BLUE PRO MAX+ 1.5","indice":1.5,"fornitore":"PERFETTA","trattamento":"BLUE PRO MAX+","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":85.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"CR SPECCHIATA 1.5","indice":1.5,"fornitore":"PERFETTA","trattamento":"HARD","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":90.0,"uso":"SOLE","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"CR COLORATA HARD 1.6","indice":1.6,"fornitore":"PERFETTA","trattamento":"HARD","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":100.0,"uso":"SOLE","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"CR SFERICA MAX+ 1.6","indice":1.6,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":105.0,"uso":"NORMALE","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"CR POLARIZZATA MAX SUN 1.5","indice":1.5,"fornitore":"PERFETTA","trattamento":"MAX SUN","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":105.0,"uso":"SOLE POLARIZZATO","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"CR SFERICA RX MAX+ 1.5","indice":1.5,"fornitore":"PERFETTA","trattamento":"MAX +","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":110.0,"uso":"NORMALE","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"CR SFERICA BLUE PRO MAX+ 1..6","indice":0,"fornitore":"PERFETTA","trattamento":"BLUE PRO MAX+","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":120.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"CR SFERICA RX MAX+ 1.6","indice":1.6,"fornitore":"PERFETTA","trattamento":"MAX +","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":126.0,"uso":"NORMALE","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"CR TRANSITION GENS MAX+ 1.5","indice":1.5,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"SI","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":130.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"CR COLORATA MAX+ 1.6","indice":1.6,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":130.0,"uso":"SOLE","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"CR ASFERICA MAX 1.6","indice":1.6,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":135.0,"uso":"NORMALE","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"CR SPECCHIATA 1.6","indice":1.6,"fornitore":"PERFETTA","trattamento":"HARD","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":150.0,"uso":"SOLE","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"CR ASFERICA MAX+ 1.6","indice":1.6,"fornitore":"PERFETTA","trattamento":"MAX +","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":156.0,"uso":"NORMALE","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"CR SFERICA BLU PRO MAX+ 1.5","indice":1.5,"fornitore":"PERFETTA","trattamento":"BLUE PRO MAX+","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":160.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"CR ASFERICA MAX 1.67","indice":1.67,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":165.0,"uso":"NORMALE","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"CR SFERICA BLU PRO MAX+ 1.6","indice":1.6,"fornitore":"PERFETTA","trattamento":"BLUE PRO MAX+","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":180.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"CR SFERICA RX MAX+ 1.67","indice":1.67,"fornitore":"PERFETTA","trattamento":"MAX +","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":187.0,"uso":"NORMALE","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"CR COLORATA MAX+ 1.67","indice":1.67,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":190.0,"uso":"SOLE","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"CR ASFERICA MAX+ 1.67","indice":1.67,"fornitore":"PERFETTA","trattamento":"MAX +","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":208.0,"uso":"NORMALE","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"CR TRANSITION GENS MAX+ 1.6","indice":1.6,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"SI","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":220.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"PERFETTA SV SFERICA TRNS XTRACTIVE MAX+ 1.5","indice":1.5,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"SI","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":240.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"CR POLARIZZATA MAX SUN 1.6","indice":1.6,"fornitore":"PERFETTA","trattamento":"MAX SUN","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":240.0,"uso":"SOLE POLARIZZATO","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"CR ASFERICA MAX 1.74","indice":1.74,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":250.0,"uso":"NORMALE","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"CR SFERICA BLU PRO MAX+ 1.67","indice":1.67,"fornitore":"PERFETTA","trattamento":"BLUE PRO MAX+","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":250.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"CR TRANSITION MAX+ 1.5","indice":1.5,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"SI","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":250.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"PERFETTA SV SFERICA TRNS XTRACTIVE POLAR MAX+ 1.5","indice":1.5,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"SI","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":286.0,"uso":"TRANSITION POLARIZZATA","polarizza":"SI","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"PERFETTA SV SFERICA TRNS XTRACTIVE MAX+ 1.6","indice":1.6,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"SI","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":290.0,"uso":"TRANSITION POLARIZZATA","polarizza":"SI","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"CR ASFERICA TRANSITION MAX+ 1.6","indice":1.6,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"SI","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":290.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"CR ASFERICA MAX+ 1.74","indice":1.74,"fornitore":"PERFETTA","trattamento":"MAX +","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":295.0,"uso":"NORMALE","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"CR ASFERICA TRANSITION MAX+ 1.67","indice":1.67,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"SI","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":330.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"CR TRANSITION MAX+ 1.6","indice":1.6,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"SI","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":340.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"CR POLARIZZATA MAX SUN 1.67","indice":1.67,"fornitore":"PERFETTA","trattamento":"MAX SUN","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":350.0,"uso":"SOLE","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"PERFETTA SV SFERICA TRNS XTRACTIVE POLAR MAX+ 1.6","indice":1.6,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"SI","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":364.0,"uso":"TRANSITION POLARIZZATA","polarizza":"SI","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"PERFETTA SV SFERICA TRNS XTRACTIVE MAX+ 1.67","indice":1.67,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"SI","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":420.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"PERFETTA SV SFERICA TRNS XTRACTIVE POLAR MAX+ 1.67","indice":1.67,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"SI","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":428.0,"uso":"TRANSITION POLARIZZATA","polarizza":"SI","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"CR TRANSITION MAX+ 1.67","indice":1.67,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"SI","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":450.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"CR STRESSLESS MAX+ 1.5","indice":1.5,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":150.0,"uso":"NORMALE","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"CR STRESSLESS MAX+ 1.6","indice":1.6,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":180.0,"uso":"NORMALE","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"CR STRESSLESS MAX BLUE 1.5","indice":1.5,"fornitore":"PERFETTA","trattamento":"MAX BLUE","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":180.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"CR STRESSLESS MAX BLUE 1.6","indice":1.6,"fornitore":"PERFETTA","trattamento":"MAX BLUE","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":230.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":2},{"tipoLente":"PROGRESSIVA","modello":"PROGRESSIVA PERSONALIZZATA MAX+ 1.5","indice":1.5,"fornitore":"PERFETTA","trattamento":"Max+","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":220.0,"uso":"NORMALE","polarizza":"NO","brandPriority":2},{"tipoLente":"PROGRESSIVA","modello":"PROGRESSIVA PERSONALIZZATA COLORATA MAX+ 1.5","indice":1.5,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":265.0,"uso":"SOLE","polarizza":"NO","brandPriority":2},{"tipoLente":"PROGRESSIVA","modello":"PROGRESSIVA PERSONALIZZATA COLORATA MAX+ 1.6","indice":1.6,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":275.0,"uso":"SOLE","polarizza":"NO","brandPriority":2},{"tipoLente":"PROGRESSIVA","modello":"PROGRESSIVA PERSONALIZZATA MAX BLUE 1.5","indice":1.5,"fornitore":"PERFETTA","trattamento":"Max blu","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":290.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":2},{"tipoLente":"PROGRESSIVA","modello":"PROGRESSIVA PERSONALIZZATA POLARIZZATA MAX SUN 1.5","indice":1.5,"fornitore":"PERFETTA","trattamento":"MAX SUN","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":295.0,"uso":"SOLE POLARIZZATO","polarizza":"SI","brandPriority":2},{"tipoLente":"PROGRESSIVA","modello":"PROGRESSIVA PERSONALIZZATA MAX+ 1.6","indice":1.6,"fornitore":"PERFETTA","trattamento":"Max+","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":300.0,"uso":"NORMALE","polarizza":"NO","brandPriority":2},{"tipoLente":"PROGRESSIVA","modello":"PROGRESSIVA PERSONALIZZATA MAX BLUE 1.6","indice":1.6,"fornitore":"PERFETTA","trattamento":"Max blu","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":300.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":2},{"tipoLente":"PROGRESSIVA","modello":"PROGRESSIVA PERSONALIZZATA POLARIZZATA MAX SUN 1.6","indice":1.6,"fornitore":"PERFETTA","trattamento":"MAX SUN","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":300.0,"uso":"SOLE POLARIZZATO","polarizza":"SI","brandPriority":2},{"tipoLente":"PROGRESSIVA","modello":"PROGRESSIVA PERSONALIZZATA COLORATA MAX+ 1.67","indice":1.67,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":305.0,"uso":"SOLE","polarizza":"NO","brandPriority":2},{"tipoLente":"PROGRESSIVA","modello":"PROGRESSIVA PERSONALIZZATA TRANSITIONS GenS MAX+ 1.5","indice":1.5,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"SI","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":310.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":2},{"tipoLente":"PROGRESSIVA","modello":"PROGRESSIVA PERSONALIZZATA POLARIZZATA MAX SUN 1.67","indice":1.67,"fornitore":"PERFETTA","trattamento":"MAX SUN","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":330.0,"uso":"SOLE POLARIZZATO","polarizza":"SI","brandPriority":2},{"tipoLente":"PROGRESSIVA","modello":"PROGRESSIVA PERSONALIZZATA COLORATA MAX+ 1.74","indice":1.74,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":350.0,"uso":"SOLE","polarizza":"NO","brandPriority":2},{"tipoLente":"PROGRESSIVA","modello":"PROGRESSIVA PERSONALIZZATA MAX+ 1.67","indice":1.67,"fornitore":"PERFETTA","trattamento":"Max+","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":360.0,"uso":"NORMALE","polarizza":"NO","brandPriority":2},{"tipoLente":"PROGRESSIVA","modello":"PROGRESSIVA PERSONALIZZATA MAX BLUE 1.67","indice":1.67,"fornitore":"PERFETTA","trattamento":"Max blu","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":380.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":2},{"tipoLente":"PROGRESSIVA","modello":"PROGRESSIVA PERSONALIZZATA TRANS. Xtractive MAX+ 1.5","indice":1.5,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"SI","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":410.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":2},{"tipoLente":"PROGRESSIVA","modello":"PROGRESSIVA PERSONALIZZATA TRANSITIONS GenS MAX+ 1.6","indice":1.6,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"SI","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":420.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":2},{"tipoLente":"PROGRESSIVA","modello":"Perfetta Personalizzata Trns Xtractive Polar MAX+ 1.5","indice":1.5,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"SI","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":480.0,"uso":"TRANSITION POLARIZZATA","polarizza":"SI","brandPriority":2},{"tipoLente":"PROGRESSIVA","modello":"PROGRESSIVA PERSONALIZZATA TRANSITIONS GenS MAX+ 1.67","indice":1.67,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"SI","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":510.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":2},{"tipoLente":"PROGRESSIVA","modello":"PROGRESSIVA PERSONALIZZATA TRANSITIONS XTRACTIVE MAX + 1.6","indice":1.6,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"SI","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":510.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":2},{"tipoLente":"PROGRESSIVA","modello":"PROGRESSIVA PERSONALIZZATA MAX+ 1.74","indice":1.74,"fornitore":"PERFETTA","trattamento":"Max+","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":520.0,"uso":"NORMALE","polarizza":"NO","brandPriority":2},{"tipoLente":"PROGRESSIVA","modello":"PROGRESSIVA PERSONALIZZATA TRANSITIONS XTRACTIVE MAX + 1.67","indice":1.67,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"SI","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":540.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":2},{"tipoLente":"PROGRESSIVA","modello":"Perfetta Personalizzata Trns Xtractive Polar MAX+ 1.6","indice":1.6,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"SI","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":575.0,"uso":"TRANSITION POLARIZZATA","polarizza":"SI","brandPriority":2},{"tipoLente":"PROGRESSIVA","modello":"Perfetta Personalizzata Trns Xtractive Polar MAX+ 1.67","indice":1.67,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"SI","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":684.0,"uso":"TRANSITION POLARIZZATA","polarizza":"SI","brandPriority":2},{"tipoLente":"PROGRESSIVA OFFICE","modello":"CR COMPUTER MAX+ 1.5","indice":1.5,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":108.0,"uso":"NORMALE","polarizza":"NO","brandPriority":2},{"tipoLente":"PROGRESSIVA OFFICE","modello":"CR COMPUTER MAX+ 1.6","indice":1.6,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":138.0,"uso":"NORMALE","polarizza":"NO","brandPriority":2},{"tipoLente":"PROGRESSIVA OFFICE","modello":"CR COMPUTER MAX BLUE 1.5","indice":1.5,"fornitore":"PERFETTA","trattamento":"MAX BLUE","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":148.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":2},{"tipoLente":"PROGRESSIVA OFFICE","modello":"CR COMPUTER MAX BLUE 1.6","indice":1.6,"fornitore":"PERFETTA","trattamento":"MAX BLUE","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":178.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":2},{"tipoLente":"PROGRESSIVA OFFICE","modello":"CR OFFICE MD MAX+ 1.5","indice":1.5,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":200.0,"uso":"NORMALE","polarizza":"NO","brandPriority":2},{"tipoLente":"PROGRESSIVA OFFICE","modello":"CR OFFICE MD MAX+ 1.6","indice":1.6,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":230.0,"uso":"NORMALE","polarizza":"NO","brandPriority":2},{"tipoLente":"PROGRESSIVA OFFICE","modello":"CR OFFICE MD MAX BLUE 1.5","indice":1.5,"fornitore":"PERFETTA","trattamento":"MAX BLUE","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":250.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":2},{"tipoLente":"PROGRESSIVA OFFICE","modello":"CR COMPUTER MAX+ 1.67","indice":1.67,"fornitore":"PERFETTA","trattamento":"MAX+","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":270.0,"uso":"NORMALE","polarizza":"NO","brandPriority":2},{"tipoLente":"PROGRESSIVA OFFICE","modello":"CR OFFICE MD MAX BLUE 1.6","indice":1.6,"fornitore":"PERFETTA","trattamento":"MAX BLUE","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":280.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":2},{"tipoLente":"PROGRESSIVA OFFICE","modello":"CR COMPUTER MAX BLUE 1.67","indice":1.67,"fornitore":"PERFETTA","trattamento":"MAX BLUE","fotocromatico":"NO","livello":"GOLD","sottoLivello":"MEDIO","prezzoCoppia":310.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":2},{"tipoLente":"MONOFOCALE","modello":"ESSILOR PROMO ORMA 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Easy Pro","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":80.0,"uso":"NORMALE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"ORMA RX 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Easy Pro","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":104.0,"uso":"NORMALE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"ESSILOR PROMO ORMIX 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Easy Pro","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":130.0,"uso":"NORMALE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"ORMIX RX 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Easy Pro","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":138.0,"uso":"NORMALE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"ORMA 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Easy Pro","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":144.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"ORMA 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Supra","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":152.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"ORMA XPERIO COLORS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Supra","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":174.0,"uso":"SOLE POLARIZZATO","polarizza":"SI","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"ESSILOR PROMO STYLIS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":180.0,"uso":"NORMALE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"ORMIX 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Easy Pro","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":180.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"ORMIX 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Supra","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":186.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"ORMIX XPERIO 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Supra","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":208.0,"uso":"SOLE POLARIZZATO","polarizza":"SI","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"AS ORMIX 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Supra","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":228.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"SFERICA ORMA RX 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":250.0,"uso":"NORMALE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"ESSILOR PROMO LINEIS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":270.0,"uso":"NORMALE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"ORMA 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sun Xprotect","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":270.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"SFERICA ORMIX RX 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":286.0,"uso":"NORMALE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"SFERICA ORMA RX TRGNS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":286.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"ORMA XPERIO COLORS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sun Xprotect","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":292.0,"uso":"SOLE POLARIZZATO","polarizza":"SI","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"ORMIX 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sun Xprotect","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":306.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"SFERICA ORMA RX TRGNS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":320.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"STYLIS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sun Xprotect","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":320.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"ASFERICA ORMIX 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":328.0,"uso":"NORMALE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"ORMIX XPERIO 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sun Xprotect","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":328.0,"uso":"SOLE POLARIZZATO","polarizza":"SI","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"SFERICA ORMIX RX TRGNS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":334.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"STYLIS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire Hr","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":340.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"ASFERICA STYLIS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":342.0,"uso":"NORMALE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"STYLIS XPERIO 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sun Xprotect","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":342.0,"uso":"SOLE POLARIZZATO","polarizza":"SI","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"AS ORMIX 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sun Xprotect","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":348.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"SFERICA STYLIS RX TRGNS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":362.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"AS STYLIS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sun Xprotect","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":362.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"SFERICA ORMIX RX TRGNS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":370.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"ASFERICA ORMIX TRGNS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":376.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"ASFERICA LINEIS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":390.0,"uso":"NORMALE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"ORMA TR XTR POLAR 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":390.0,"uso":"TRANSITION POLARIZZATA","polarizza":"SI","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"SFERICA STYLIS RX TRGNS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":398.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"ASFERICA ORMIX TRGNS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":412.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"AS LINEIS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire Hr","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":432.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"ASFERICA STYLIS TRGNS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":440.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"ORMIX TR XTR POLAR 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":440.0,"uso":"TRANSITION POLARIZZATA","polarizza":"SI","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"STYLIS XTR POLAR 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":468.0,"uso":"TRANSITION POLARIZZATA","polarizza":"SI","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"EYEZEN START EYECODE LINEIS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire Hr","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":478.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"ASFERICA LINEIS TRGNS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":488.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"SFERICA STYLIS RX 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":300.0,"uso":"NORMALE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START EYECODE ORMA POLAR 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Supra","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":262.0,"uso":"SOLE POLARIZZATO","polarizza":"SI","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START ORMA EPS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":266.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START EYECODE ORMIX POLAR 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Supra","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":296.0,"uso":"SOLE POLARIZZATO","polarizza":"SI","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START ORMA 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":306.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START ORMA 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sun Xprotect","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":320.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START F-360 ORMA 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":330.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START ORMA 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire Hr","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":342.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START ORMIX 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":342.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START EYECODE ORMA 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":344.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START F-360 ORMA 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sun Xprotect","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":344.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START ORMIX 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sun Xprotect","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":356.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START STYLIS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":356.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START EYECODE ORMA 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sun Xprotect","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":358.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START F-360 ORMA 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire Hr","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":366.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START F-360 ORMIX 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":366.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START STYLIS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sun Xprotect","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":370.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START ORMIX 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire Hr","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":376.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START EYECODE ORMA 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire Hr","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":380.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START EYECODE ORMA POLAR 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sun Xprotect","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":380.0,"uso":"SOLE POLARIZZATO","polarizza":"SI","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START EYECODE ORMIX 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":380.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START F-360 ORMIX 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sun Xprotect","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":380.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START F-360 STYLIS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":380.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START STYLIS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire Hr","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":390.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START EYECODE ORMIX 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sun Xprotect","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":394.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START EYECODE STYLIS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":394.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START F-360 STYLIS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sun Xprotect","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":394.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START F-360 ORMIX 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire Hr","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":400.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START LINEIS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":404.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START EYECODE STYLIS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sun Xprotect","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":408.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START EYECODE ORMIX 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire Hr","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":414.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START F-360 STYLIS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire Hr","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":414.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START EYECODE ORMIX POLAR 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sun Xprotect","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":416.0,"uso":"SOLE POLARIZZATO","polarizza":"SI","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START EYECODE STYLIS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire Hr","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":428.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START F-360 LINEIS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":428.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START LINEIS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire Hr","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":440.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START EYECODE LINEIS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":442.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START EYECODE STYLIS POLAR 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire Hr","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":450.0,"uso":"SOLE POLARIZZATO","polarizza":"SI","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START F-360 LINEIS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire Hr","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":464.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"EYEZEN START ORMA BLUE B 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Easy Pro","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":136.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"EYEZEN START ORMIX BLUE B 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Easy Pro","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":184.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"EYEZEN START ORMA BLUE B 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":198.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"EYEZEN START ORMIX BLUE B 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":236.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST STANDARD ORMA O,4-0,6-0,85 EPS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":280.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START F-360 ORMA EPS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":290.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"EYEZEN START ORMA EPS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":302.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"EYEZEN START ORMIX EPS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":302.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"EYEZEN START EYECODE ORMA EPS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":304.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST F-360 ORMA O,4-0,6-0,85 EPS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":304.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST STANDARD 1,1 ORMA EPS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":304.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"EYEZEN START STYLIS EPS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":316.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST STANDARD ORMA O,4-0,6-0,85 EPS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":316.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST STANDARD ORMIX O,4-0,6-0,85 EPS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":316.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"EYEZEN START ORMA TRGNS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":318.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST EYECODE ORMA O,4-0,6-0,85 EPS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":318.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START F-360 ORMA EPS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":324.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START F-360 ORMIX EPS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":324.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST F-360 1,1 ORMA EPS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":324.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST STANDARD STYLIS O,4-0,6-0,85 EPS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":330.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START ORMIX EPS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":336.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START EYECODE ORMA EPS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":338.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START EYECODE ORMIX EPS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":338.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START F-360 STYLIS EPS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":338.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST F-360 ORMA O,4-0,6-0,85 EPS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":338.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST F-360 ORMIX O,4-0,6-0,85 EPS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":338.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST EYECODE 1,1 ORMA EPS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":338.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST STANDARD 1,1 ORMA EPS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":338.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST STANDARD 1,1 ORMIX EPS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":338.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START STYLIS EPS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":350.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST STANDARD ORMIX O,4-0,6-0,85 EPS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":350.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST STANDARD ORMA 0,4-0,6-0,85 TRGNS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":350.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START EYECODE STYLIS EPS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":352.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START ORMIX TRGNS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":352.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST EYECODE ORMA O,4-0,6-0,85 EPS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":352.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST EYECODE ORMIX O,4-0,6-0,85 EPS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":352.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST F-360 STYLIS O,4-0,6-0,85 EPS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":352.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST STANDARD 1,1 STYLIS EPS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":352.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START F-360 ORMIX EPS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":360.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START F-360 ORMA TRGNS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":360.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST F-360 1,1 ORMA EPS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":360.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST F-360 1,1 ORMIX EPS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":360.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START LINEIS EPS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":364.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST STANDARD STYLIS O,4-0,6-0,85 EPS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":364.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START STYLIS TRGNS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":366.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST EYECODE STYLIS O,4-0,6-0,85 EPS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":366.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START ORMA TRGNS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":372.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START EYECODE ORMIX EPS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":374.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START F-360 STYLIS EPS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":374.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START EYECODE ORMA TRGNS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":374.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST F-360 ORMIX O,4-0,6-0,85 EPS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":374.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST EYECODE 1,1 ORMA EPS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":374.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST EYECODE 1,1 ORMIX EPS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":374.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST F-360 1,1 STYLIS EPS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":374.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST STANDARD 1,1 ORMIX EPS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":374.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST F-360 0,4-0,6-0,85 ORMA TRGNS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":374.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST STANDARD ORMA 1,1 TRGNS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":374.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST STANDARD LINEIS O,4-0,6-0,85 EPS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":378.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST STANDARD ORMA O,4-0,6-0,85 TRGNS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":386.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START EYECODE STYLIS EPS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":388.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START F-360 LINEIS EPS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":388.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST EYECODE ORMIX O,4-0,6-0,85 EPS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":388.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST F-360 STYLIS O,4-0,6-0,85 EPS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":388.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST EYECODE 1,1 STYLIS EPS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":388.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST STANDARD 1,1 STYLIS EPS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":388.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST EYECODE 0,4-0,6-0,85 ORMA TRGNS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":388.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START F-360 ORMA TRGNS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":394.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST F-360 1,1 ORMIX EPS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":394.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST F-360 1,1 ORMA TRGNS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":394.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START LINEIS EPS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":400.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST STANDARD ORMIX O,4-0,6-0,85 TRGNS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":400.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START EYECODE LINEIS EPS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":402.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST EYECODE STYLIS O,4-0,6-0,85 EPS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":402.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST F-360 LINEIS O,4-0,6-0,85 EPS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":402.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST STANDARD 1,1 LINEIS EPS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":402.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START EYECODE ORMA TRGNS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":408.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START F-360 ORMIX TRGNS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":408.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST EYECODE 1,1 ORMIX EPS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":408.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST F-360 1,1 STYLIS EPS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":408.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST F-360 0,4-0,6-0,85 ORMA TRGNS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":408.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST EYECODE 1,1 ORMA TRGNS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":408.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST STANDARD ORMA 1,1 TRGNS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":408.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST STANDARD LINEIS O,4-0,6-0,85 EPS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":414.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START LINEIS TRGNS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":416.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST EYECODE LINEIS O,4-0,6-0,85 EPS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":416.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START ORMIX TRGNS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":420.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START F-360 LINEIS EPS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":422.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START EYECODE ORMIX TRGNS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":422.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST EYECODE 1,1 STYLIS EPS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":422.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST F-360 1,1 LINEIS EPS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":422.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST EYECODE 0,4-0,6-0,85 ORMA TRGNS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":422.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST F-360 0,4-0,6-0,85 ORMIX TRGNS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":422.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST STANDARD ORMIX 1,1 TRGNS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":422.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST STANDARD STYLIS O,4-0,6-0,85 TRGNS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":428.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST F-360 1,1 ORMA TRGNS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":430.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST STANDARD ORMIX O,4-0,6-0,85 TRGNS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":434.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START EYECODE LINEIS EPS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":436.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START F-360 STYLIS TRGNS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":436.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST F-360 LINEIS O,4-0,6-0,85 EPS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":436.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST EYECODE 1,1 LINEIS EPS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":436.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST STANDARD 1,1 LINEIS EPS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":436.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST EYECODE 0,4-0,6-0,85 ORMIX TRGNS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":436.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START TR XPOLAR ORMA 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":442.0,"uso":"TRANSITION POLARIZZATA","polarizza":"SI","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START F-360 ORMIX TRGNS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":444.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST EYECODE 1,1 ORMA TRGNS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":444.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST F-360 1,1 ORMIX TRGNS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":444.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START STYLIS TRGNS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":448.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START EYECODE STYLIS TRGNS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":450.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST EYECODE LINEIS O,4-0,6-0,85 EPS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":450.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST STANDARD STYLIS 1,1 TRGNS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":450.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START EYECODE ORMIX TRGNS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":458.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST F-360 1,1 LINEIS EPS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":458.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST F-360 0,4-0,6-0,85 ORMIX TRGNS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":458.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST EYECODE 1,1 ORMIX TRGNS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":458.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST STANDARD ORMIX 1,1 TRGNS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":458.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST STANDARD STYLIS O,4-0,6-0,85 TRGNS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":462.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START F-360 TR XPOLAR ORMA 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":464.0,"uso":"TRANSITION POLARIZZATA","polarizza":"SI","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START F-360 STYLIS TRGNS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":472.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST EYECODE 1,1 LINEIS EPS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":472.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST EYECODE 0,4-0,6-0,85 ORMIX TRGNS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":472.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST STANDARD LINEIS O,4-0,6-0,85 TRGNS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":476.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START EYECODE TR XPOLAR ORMA 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":478.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST F-360 1,1 ORMIX TRGNS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":478.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START EYECODE STYLIS TRGNS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":486.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START F-360 LINEIS TRGNS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":486.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST STANDARD STYLIS 1,1 TRGNS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":486.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START TR XPOLAR ORMIX 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":490.0,"uso":"TRANSITION POLARIZZATA","polarizza":"SI","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST EYECODE 1,1 ORMIX TRGNS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":492.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START LINEIS TRGNS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":498.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START EYECODE LINEIS TRGNS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":500.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST STANDARD LINEIS 1,1 TRGNS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":500.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST STANDARD LINEIS O,4-0,6-0,85 TRGNS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":512.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START F-360 TR XPOLAR ORMIX 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":514.0,"uso":"TRANSITION POLARIZZATA","polarizza":"SI","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START TR XPOLAR STYLIS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":518.0,"uso":"TRANSITION POLARIZZATA","polarizza":"SI","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START F-360 LINEIS TRGNS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":520.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START EYECODE TR XPOLAR ORMIX 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":528.0,"uso":"TRANSITION POLARIZZATA","polarizza":"SI","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START EYECODE LINEIS TRGNS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":534.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN BOOST STANDARD LINEIS 1,1 TRGNS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":534.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START F-360 TR XPOLAR STYLIS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":542.0,"uso":"TRANSITION POLARIZZATA","polarizza":"SI","brandPriority":1},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"EYEZEN START EYECODE TR XPOLAR STYLIS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":556.0,"uso":"TRANSITION POLARIZZATA","polarizza":"SI","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Comfort Max Short ORMA EPS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Easy Pro","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":378.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Comfort Max Short ORMA EPS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":420.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Comfort Max Short ORMIX EPS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Easy Pro","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":428.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Comfort Max Short ORMA TRGNS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Easy Pro","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":448.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Comfort Max Short ORMA EPS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":462.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Comfort Max Short STYLIS EPS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Easy Pro","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":462.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Comfort Max Short ORMIX EPS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":470.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Comfort Max Short ORMA TRGNS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":490.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Comfort Max F-360° ORMA 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":500.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Comfort Max Short STYLIS EPS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":504.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Comfort Max Short ORMIX EPS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":512.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Comfort Max Short ORMIX TRGNS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Easy Pro","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":512.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Comfort Max Short ORMA TRGNS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":532.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Comfort Max Short STYLIS EPS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":546.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Comfort Max F-360° ORMIX 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":550.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Comfort Max Short ORMIX TRGNS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":554.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Physio Extensee ORMA EPS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":558.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Comfort Max Short STYLIS TRGNS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Easy Pro","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":560.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Comfort Max F-360° ORMA TRGNS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":570.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Physio Extensee FIT ORMA EPS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":572.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Comfort Max F-360° STYLIS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":584.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Physio Extensee ORMA TRGNS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":586.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Varilux XR Short ORMA EPS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":596.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Comfort Max Short ORMIX TRGNS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":596.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Comfort Max Short STYLIS TRGNS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":602.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Comfort Max Short ORMA TRGNS POLAR 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":602.0,"uso":"TRANSITION POLARIZZATA","polarizza":"SI","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Physio Extensee ORMIX EPS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":608.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Physio Extensee FIT ORMIX EPS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":622.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Physio Extensee ORMA TRGNS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":628.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Comfort Max F-360° ORMIX TRGNS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":634.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Varilux XR Short ORMA EPS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":638.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Comfort Max F-360° ORMA TRGNS POLAR 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":640.0,"uso":"TRANSITION POLARIZZATA","polarizza":"SI","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Physio Extensee STYLIS EPS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":642.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Physio Extensee FIT ORMA TRGNS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":642.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Comfort Max Short STYLIS TRGNS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":644.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Varilux XR Short ORMIX EPS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":646.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Physio Extensee ORMIX TRGNS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":650.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VARILUX XR FIT LINEIS EPS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":652.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Physio Extensee FIT STYLIS EPS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":656.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Varilux XR Short ORMA TRGNS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":666.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Comfort Max Short ORMIX TRGNS POLAR 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":666.0,"uso":"TRANSITION POLARIZZATA","polarizza":"SI","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Varilux XR Short STYLIS EPS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":680.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Comfort Max F-360° STYLIS TRGNS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":682.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Varilux XR Short ORMIX EPS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":688.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Physio Extensee ORMIX TRGNS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":692.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Physio Extensee STYLIS TRGNS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":698.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Physio Extensee ORMA TRGNS POLAR 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":698.0,"uso":"TRANSITION POLARIZZATA","polarizza":"SI","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VARILUX XR FIT STYLIS EPS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":702.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Comfort Max F-360° ORMIX TRGNS POLAR 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":704.0,"uso":"TRANSITION POLARIZZATA","polarizza":"SI","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Physio Extensee FIT ORMIX TRGNS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":706.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Varilux XR Short ORMA TRGNS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":708.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Physio Extensee FIT ORMA TRGNS POLAR 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":712.0,"uso":"TRANSITION POLARIZZATA","polarizza":"SI","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Physio Extensee LINEIS EPS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":714.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Comfort Max Short STYLIS TRGNS POLAR 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":714.0,"uso":"TRANSITION POLARIZZATA","polarizza":"SI","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Varilux XR Short STYLIS EPS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":722.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Varilux XR FIT ORMA TRGNS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":722.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Physio Extensee FIT LINEIS EPS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":728.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Varilux XR Short ORMIX TRGNS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":730.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VARILUX XR FIT ORMIX EPS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":736.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Physio Extensee STYLIS TRGNS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":740.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Varilux XR Short LINEIS EPS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":752.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Comfort Max F-360° STYLIS TRGNS POLAR 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":752.0,"uso":"TRANSITION POLARIZZATA","polarizza":"SI","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Physio Extensee FIT STYLIS TRGNS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":754.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Physio Extensee ORMIX TRGNS POLAR 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":762.0,"uso":"TRANSITION POLARIZZATA","polarizza":"SI","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Varilux XR Short ORMIX TRGNS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":772.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Physio Extensee FIT ORMIX TRGNS POLAR 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":776.0,"uso":"TRANSITION POLARIZZATA","polarizza":"SI","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Varilux XR Short STYLIS TRGNS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":778.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Varilux XR FIT ORMIX TRGNS 1.6","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":786.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Varilux XR Short LINEIS EPS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":794.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VARILUX XR FIT ORMA EPS 1.5","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":808.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Physio Extensee STYLIS TRGNS POLAR 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":810.0,"uso":"TRANSITION POLARIZZATA","polarizza":"SI","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Physio Extensee LINEIS TRGNS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":812.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Varilux XR Short STYLIS TRGNS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":820.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Physio Extensee FIT STYLIS TRGNS POLAR 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":824.0,"uso":"TRANSITION POLARIZZATA","polarizza":"SI","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Vx Physio Extensee FIT LINEIS TRGNS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":826.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Varilux XR FIT STYLIS TRGNS 1.67","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":834.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Varilux XR Short LINEIS TRGNS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":850.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Varilux XR Short LINEIS TRGNS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":892.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"Varilux XR FIT LINEIS TRGNS 1.74","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"SI","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":906.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":1},{"tipoLente":"MONOFOCALE","modello":"CR TOP 1.56","indice":1.56,"fornitore":"DAI","trattamento":"AR","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":50.0,"uso":"NORMALE","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR SAFER 1.56","indice":1.56,"fornitore":"DAI","trattamento":"SAFER","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":70.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR TOP 1.6","indice":1.6,"fornitore":"DAI","trattamento":"AR","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":80.0,"uso":"NORMALE","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR COLORATA 1.5","indice":1.5,"fornitore":"DAI","trattamento":"HARD","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":90.0,"uso":"SOLE","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR TOP 1.67","indice":1.67,"fornitore":"DAI","trattamento":"AR","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":100.0,"uso":"NORMALE","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR TOP 1.5","indice":1.5,"fornitore":"DAI","trattamento":"AR","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":100.0,"uso":"NORMALE","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR UV PROTECTION 1.6","indice":1.6,"fornitore":"DAI","trattamento":"SAFER","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":110.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR TRANSITION TOP 1.5","indice":1.5,"fornitore":"DAI","trattamento":"AR","fotocromatico":"SI","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":130.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR TOP 1.6","indice":1.6,"fornitore":"DAI","trattamento":"AR","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":130.0,"uso":"NORMALE","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR COLORATA TOP INTERNO 1.5","indice":1.5,"fornitore":"DAI","trattamento":"AR","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":130.0,"uso":"SOLE","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR BLUE SCUDO 1.5","indice":1.5,"fornitore":"DAI","trattamento":"BLUE SCUDO","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":140.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR 1.5 SPECCHIATA HARD","indice":1.5,"fornitore":"DAI","trattamento":"HARD","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":140.0,"uso":"SOLE","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR TOP 1.74","indice":1.74,"fornitore":"DAI","trattamento":"AR","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":160.0,"uso":"NORMALE","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR TRANSITION TOP 1.5","indice":1.5,"fornitore":"DAI","trattamento":"AR","fotocromatico":"SI","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":170.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR BLU SCUDO 1.6","indice":1.6,"fornitore":"DAI","trattamento":"BLUE SCUDO","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":210.0,"uso":"NORMALE","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR TOP 1.67","indice":1.67,"fornitore":"DAI","trattamento":"AR","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":220.0,"uso":"NORMALE","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR TRANSITION XTRACTIVE TOP 1.5","indice":1.5,"fornitore":"DAI","trattamento":"AR","fotocromatico":"SI","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":224.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR BLUE SCUDO 1.67","indice":1.67,"fornitore":"DAI","trattamento":"BLUE SCUDO","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":250.0,"uso":"NORMALE","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR BLUE SCUDO 1.74","indice":1.74,"fornitore":"DAI","trattamento":"BLUE SCUDO","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":260.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR TRANSITION TOP 1.6","indice":1.6,"fornitore":"DAI","trattamento":"AR","fotocromatico":"SI","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":280.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR TRANSITION TOP 1.67","indice":1.67,"fornitore":"DAI","trattamento":"AR","fotocromatico":"SI","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":290.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR TOP 1.74","indice":1.74,"fornitore":"DAI","trattamento":"AR","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":320.0,"uso":"NORMALE","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR TRANSITION XTRACTIVE TOP 1.67","indice":1.67,"fornitore":"DAI","trattamento":"AR","fotocromatico":"SI","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":330.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR TRANSITION TOP 1.74","indice":1.74,"fornitore":"DAI","trattamento":"AR","fotocromatico":"SI","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":410.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR COLORATA 1.5","indice":1.5,"fornitore":"DAI","trattamento":"HARD","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":50.0,"uso":"SOLE","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR COLORATA TOP INTERNO 1.5","indice":1.5,"fornitore":"DAI","trattamento":"AR","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":90.0,"uso":"SOLE","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR COLORATA 1.6","indice":1.6,"fornitore":"DAI","trattamento":"HARD","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":120.0,"uso":"SOLE","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR COLORATA TOP INTERNO 1.6","indice":1.6,"fornitore":"DAI","trattamento":"AR","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":160.0,"uso":"SOLE","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR COLORATA 1.67","indice":1.67,"fornitore":"DAI","trattamento":"HARD","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":210.0,"uso":"SOLE","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR COLORATA TOP INTERNO 1.67","indice":1.67,"fornitore":"DAI","trattamento":"AR","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":250.0,"uso":"SOLE","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"PROGRESSIVA STAR 2.0 TOP +DSX 1.5","indice":1.5,"fornitore":"DAI","trattamento":"AR","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":176.0,"uso":"NORMALE","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"PROGRESSIVA STAR 2.0 BLU SCUDO +DSX 1.5","indice":1.5,"fornitore":"DAI","trattamento":"BLU SCUDO","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":210.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"PROGRESSIVA STAR 2.0 TOP +DSX 1.6","indice":1.6,"fornitore":"DAI","trattamento":"AR","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":219.0,"uso":"NORMALE","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"PROGRESSIVA STAR BLU SCUDO +DSX 1.67","indice":1.67,"fornitore":"DAI","trattamento":"BLU SCUDO","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":259.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"PROGRESSIVA STAR 2.0 BLU SCUDO +DSX 1.6","indice":1.6,"fornitore":"DAI","trattamento":"BLU SCUDO","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":260.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"PROGRESSIVA STAR 2.0 TOP +DSX 1.67","indice":1.67,"fornitore":"DAI","trattamento":"AR","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":270.0,"uso":"NORMALE","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"CR PROGRESSIVA STAR 2.0 TRANSITIONS GenS TOP +DSX 1.5","indice":1.5,"fornitore":"DAI","trattamento":"AR","fotocromatico":"SI","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":270.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"CR PROGRESSIVA STAR 2.0 TRANSITIONS GenS TOP +DSX 1.6","indice":1.6,"fornitore":"DAI","trattamento":"AR","fotocromatico":"SI","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":300.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"CR PROGRESSIVA STAR 2.0 TRANSITIONS GenS TOP +DSX 1.67","indice":1.67,"fornitore":"DAI","trattamento":"AR","fotocromatico":"SI","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":370.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"CR PROGRESSIVA STAR 2.0 TRANSITIONS XTRACTIVE TOP +DSX 1.67","indice":1.67,"fornitore":"DAI","trattamento":"AR","fotocromatico":"SI","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":410.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"PROGRESSIVA STAR 2.0 TOP +DSX 1.74","indice":1.74,"fornitore":"DAI","trattamento":"AR","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":510.0,"uso":"NORMALE","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"PROGRESSIVA STAR 2.0 BLU SCUDO +DSX 1.74","indice":1.74,"fornitore":"DAI","trattamento":"BLU SCUDO","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":550.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"CR PROGRESSIVA STAR 2.0 TRANSITIONS GenS TOP +DSX 1.74","indice":1.74,"fornitore":"DAI","trattamento":"AR","fotocromatico":"SI","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":610.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR 1.5 SPECCHIATA DECOR INTERNO","indice":1.5,"fornitore":"DAI","trattamento":"TOP","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":180.0,"uso":"SOLE SPECCHIATO","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR 1.5 ICE HARD","indice":1.5,"fornitore":"DAI","trattamento":"HARD","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":160.0,"uso":"SOLE SPECCHIATO","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR 1.5 ICE DECOR INTERNO","indice":1.5,"fornitore":"DAI","trattamento":"TOP","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":200.0,"uso":"SOLE SPECCHIATO","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR 1.6 SPECCHIATA HARD","indice":1.6,"fornitore":"DAI","trattamento":"HARD","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":170.0,"uso":"SOLE SPECCHIATO","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR 1.6 SPECCHIATA DECOR INTERNO","indice":1.6,"fornitore":"DAI","trattamento":"TOP","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":210.0,"uso":"SOLE SPECCHIATO","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR 1.6 ICE HARD","indice":1.6,"fornitore":"DAI","trattamento":"HARD","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":190.0,"uso":"SOLE SPECCHIATO","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR 1.6 ICE DECOR INTERNO","indice":1.6,"fornitore":"DAI","trattamento":"TOP","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":230.0,"uso":"SOLE SPECCHIATO","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR 1.67 SPECCHIATA HARD","indice":1.67,"fornitore":"DAI","trattamento":"HARD","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":260.0,"uso":"SOLE SPECCHIATO","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR 1.67 SPECCHIATA DECOR INTERNO","indice":1.67,"fornitore":"DAI","trattamento":"TOP","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":300.0,"uso":"SOLE SPECCHIATO","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR 1.67 ICE HARD","indice":1.67,"fornitore":"DAI","trattamento":"HARD","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":280.0,"uso":"SOLE SPECCHIATO","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR 1.67 ICE DECOR INTERNO","indice":1.67,"fornitore":"DAI","trattamento":"TOP","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":320.0,"uso":"SOLE SPECCHIATO","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR 1.74 SPECCHIATA HARD","indice":1.74,"fornitore":"DAI","trattamento":"HARD","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":360.0,"uso":"SOLE SPECCHIATO","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR 1.74 SPECCHIATA DECOR INTERNO","indice":1.74,"fornitore":"DAI","trattamento":"TOP","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":400.0,"uso":"SOLE SPECCHIATO","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR 1.74 ICE HARD","indice":1.74,"fornitore":"DAI","trattamento":"HARD","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":380.0,"uso":"SOLE SPECCHIATO","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE","modello":"CR 1.74 ICE DECOR INTERNO","indice":1.74,"fornitore":"DAI","trattamento":"TOP","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":420.0,"uso":"SOLE SPECCHIATO","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"CR 1.5 NO STRESS TOP","indice":1.5,"fornitore":"DAI","trattamento":"TOP","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":160.0,"uso":"NORMALE","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"CR 1.5 NO STRESS BLU SCUDO","indice":1.5,"fornitore":"DAI","trattamento":"BLU SCUDO","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":200.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"CR 1.5 NO STRESS TRANSITION GENS TOP","indice":1.5,"fornitore":"DAI","trattamento":"TOP","fotocromatico":"SI","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":220.0,"uso":"TRANSITION","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"CR 1.6 NO STRESS TOP","indice":1.6,"fornitore":"DAI","trattamento":"TOP","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":210.0,"uso":"NORMALE","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"CR 1.6 NO STRESS SAFER TOP","indice":1.6,"fornitore":"DAI","trattamento":"BLU SCUDO","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":250.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"CR STRESSLESS 1.67 TOP","indice":1.67,"fornitore":"DAI","trattamento":"TOP","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":234.0,"uso":"NORMALE","polarizza":"NO","brandPriority":3},{"tipoLente":"MONOFOCALE EVOLUTA","modello":"CR STRESSLESS 1.67 SAFER TOP","indice":1.67,"fornitore":"DAI","trattamento":"BLU SCUDO","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":320.0,"uso":"LUCE BLU","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"VARILUX XR SHORT 1.6 ORMIX XPERIO POLAR","indice":1.6,"fornitore":"ESSILOR","trattamento":"SUPRA","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":610.0,"uso":"SOLE POLARIZZATO","polarizza":"SI","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VARILUX XR SHORT 1.5 ORMA XPERIO POLAR","indice":1.5,"fornitore":"ESSILOR","trattamento":"SUPRA","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":560.0,"uso":"SOLE POLARIZZATO","polarizza":"SI","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VX PHYSIO SHORT ORMIX 1.6 XPERIO POLAR","indice":1.6,"fornitore":"ESSILOR","trattamento":"SUPRA","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":530.0,"uso":"SOLE POLARIZZATO","polarizza":"SI","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VX PHYSIO SHORT ORMA 1.5 XPERIO POLAR","indice":1.5,"fornitore":"ESSILOR","trattamento":"SUPRA","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":480.0,"uso":"SOLE POLARIZZATO","polarizza":"SI","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VX COMFORT MAX ORMIX 1.6 XPERIO POLAR","indice":1.6,"fornitore":"ESSILOR","trattamento":"SUPRA","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":436.0,"uso":"SOLE POLARIZZATO","polarizza":"SI","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VX COMFORT MAX ORMA 1.5 XPERIO POLAR","indice":1.5,"fornitore":"ESSILOR","trattamento":"SUPRA","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":386.0,"uso":"SOLE POLARIZZATO","polarizza":"SI","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VX COMFORT MAX ORMA 1.5 COLORATA","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":460.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VX COMFORT MAX ORMIX 1.6 COLORATA","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":512.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VX COMFORT MAX STYLIS 1.67 COLORATA","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":544.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VX COMFORT MAX ORMA 1.5 COLORATA","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":502.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VX COMFORT MAX ORMIX 1.6 COLORATA","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":554.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VX COMFORT MAX STYLIS 1.67 COLORATA","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":586.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VX COMFORT MAX ORMA 1.5 XPERIO POLAR","indice":1.5,"fornitore":"ESSILOR","trattamento":"CRIZAL SUN XPROTECT","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":476.0,"uso":"SOLE POLARIZZATO","polarizza":"SI","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VX COMFORT MAX ORMIX 1.6 XPERIO POLAR","indice":1.6,"fornitore":"ESSILOR","trattamento":"CRIZAL SUN XPROTECT","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":526.0,"uso":"SOLE POLARIZZATO","polarizza":"SI","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VX COMFORT MAX STYLIS 1.67 XPERIO POLAR","indice":1.67,"fornitore":"ESSILOR","trattamento":"CRIZAL SUN XPROTECT","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":560.0,"uso":"SOLE POLARIZZATO","polarizza":"SI","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VX COMFORT MAX F-360 ORMA 1.5 COLORATA","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":540.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VX COMFORT MAX F-360 ORMIX 1.6 COLORATA","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":590.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VX COMFORT MAX F-360 STYLIS 1.67 COLORATA","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":624.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VX PHYSIO EXTENSEE SHORT 1.5 ORMA COLORATA","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":556.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VX PHYSIO EXTENSEE SHORT 1.6 ORMIX COLORATA","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":606.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VX PHYSIO EXTENSEE SHORT 1.67 STYLIS COLORATA","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":640.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VX PHYSIO EXTENSEE SHORT 1.5 ORMA COLORATA","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":598.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VX PHYSIO EXTENSEE SHORT 1.6 ORMIX COLORATA","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":648.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VX PHYSIO EXTENSEE SHORT 1.67 STYLIS COLORATA","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":682.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VX PHYSIO EXTENSEE SHORT 1.74 LINEIS COLORATA","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":754.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VX PHYSIO EXTENSEE SHORT 1.5 ORMA POLAR","indice":1.5,"fornitore":"ESSILOR","trattamento":"CRIZAL SUN XPROTECT","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":572.0,"uso":"SOLE POLARIZZATO","polarizza":"SI","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VX PHYSIO EXTENSEE SHORT 1.6 ORMIX POLAR","indice":1.6,"fornitore":"ESSILOR","trattamento":"CRIZAL SUN XPROTECT","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":622.0,"uso":"SOLE POLARIZZATO","polarizza":"SI","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VX PHYSIO EXTENSEE SHORT 1.67 STYLIS POLAR","indice":1.67,"fornitore":"ESSILOR","trattamento":"CRIZAL SUN XPROTECT","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":656.0,"uso":"SOLE POLARIZZATO","polarizza":"SI","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VX PHYSIO EXTENSEE FIT SHORT 1.5 ORMA COLORATA","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":612.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VX PHYSIO EXTENSEE FIT SHORT 1.6 ORMIX COLORATA","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":662.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VX PHYSIO EXTENSEE FIT SHORT 1.67 STYLIS COLORATA","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":696.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VX PHYSIO EXTENSEE FIT SHORT 1.74 LINEIS COLORATA","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":768.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VARILUX XR SHORT 1.5 ORMA COLORATA","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":636.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VARILUX XR SHORT 1.6 ORMIX COLORATA","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":686.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VARILUX XR SHORT 1.67 STYLIS COLORATA","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":720.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VARILUX XR SHORT 1.74 LINEIS COLORATA","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Rock","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":792.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VARILUX XR SHORT 1.5 ORMA COLORATA","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":678.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VARILUX XR SHORT 1.6 ORMIX COLORATA","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":728.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VARILUX XR SHORT 1.67 STYLIS COLORATA","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":762.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VARILUX XR SHORT 1.74 LINEIS COLORATA","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":834.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VARILUX XR 1.5 ORMA XPERIO POLAR","indice":1.5,"fornitore":"ESSILOR","trattamento":"CRIZAL SUN XPROTECT","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":652.0,"uso":"SOLE POLARIZZATO","polarizza":"SI","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VARILUX XR 1.6 ORMIX XPERIO POLAR","indice":1.6,"fornitore":"ESSILOR","trattamento":"CRIZAL SUN XPROTECT","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":702.0,"uso":"SOLE POLARIZZATO","polarizza":"SI","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VARILUX XR FIT SHORT 1.5 ORMA COLORATA","indice":1.5,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":692.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VARILUX XR SHORT FIT 1.6 ORMIX COLORATA","indice":1.6,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":742.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VARILUX XR SHORT FIT 1.67 STYLIS COLORATA","indice":1.67,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":776.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"VARILUX XR SHORT FIT 1.74 LINEIS COLORATA","indice":1.74,"fornitore":"ESSILOR","trattamento":"Crizal Sapphire HR","fotocromatico":"NO","livello":"PREMIUM","sottoLivello":"ALTO","prezzoCoppia":848.0,"uso":"SOLE","polarizza":"NO","brandPriority":1},{"tipoLente":"PROGRESSIVA","modello":"CR 1.5 PROGRESSIVA 2.0 COLOR HARD","indice":1.5,"fornitore":"DAI","trattamento":"HARD","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":120.0,"uso":"SOLE","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"CR 1.5 PROGRESSIVA 2.0 COLOR DECOR INTERNO","indice":1.5,"fornitore":"DAI","trattamento":"TOP","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":160.0,"uso":"SOLE","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"CR 1.5 PROGRESSIVA 2.0 COLOR SPECCHIATA HARD","indice":1.5,"fornitore":"DAI","trattamento":"HARD","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":170.0,"uso":"SOLE SPECCHIATO","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"CR 1.5 PROGRESSIVA 2.0 COLOR SPECCHIATA DECOR INTERNO","indice":1.5,"fornitore":"DAI","trattamento":"TOP","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":210.0,"uso":"SOLE SPECCHIATO","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"CR 1.5 PROGRESSIVA 2.0 COLOR SPECCHIATA ICE HARD","indice":1.5,"fornitore":"DAI","trattamento":"HARD","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":190.0,"uso":"SOLE SPECCHIATO","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"CR 1.5 PROGRESSIVA 2.0 COLOR SPECCHIATA ICE DECOR INTERNO","indice":1.5,"fornitore":"DAI","trattamento":"TOP","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":230.0,"uso":"SOLE SPECCHIATO","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"CR 1.6 PROGRESSIVA 2.0 COLOR HARD","indice":1.6,"fornitore":"DAI","trattamento":"HARD","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":170.0,"uso":"SOLE","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"CR 1.6 PROGRESSIVA 2.0 COLOR DECOR INTERNO","indice":1.6,"fornitore":"DAI","trattamento":"TOP","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":210.0,"uso":"SOLE","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"CR 1.6 PROGRESSIVA 2.0 COLOR SPECCHIATA HARD","indice":1.6,"fornitore":"DAI","trattamento":"HARD","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":220.0,"uso":"SOLE SPECCHIATO","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"CR 1.6 PROGRESSIVA 2.0 COLOR SPECCHIATA DECOR INTERNO","indice":1.6,"fornitore":"DAI","trattamento":"TOP","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":260.0,"uso":"SOLE SPECCHIATO","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"CR 1.6 PROGRESSIVA 2.0 COLOR SPECCHIATA ICE HARD","indice":1.6,"fornitore":"DAI","trattamento":"HARD","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":240.0,"uso":"SOLE SPECCHIATO","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"CR 1.6 PROGRESSIVA 2.0 COLOR SPECCHIATA ICE DECOR INTERNO","indice":1.6,"fornitore":"DAI","trattamento":"TOP","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":280.0,"uso":"SOLE SPECCHIATO","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"CR 1.67 PROGRESSIVA 2.0 TOP COLORATA","indice":1.67,"fornitore":"DAI","trattamento":"TOP","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":250.0,"uso":"SOLE","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"CR 1.67 PROGRESSIVA 2.0 TOP SPECCHIATA","indice":1.67,"fornitore":"DAI","trattamento":"TOP","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":300.0,"uso":"SOLE SPECCHIATO","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"CR 1.67 PROGRESSIVA 2.0 TOP SPECCHIATA ICE","indice":1.67,"fornitore":"DAI","trattamento":"TOP","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":320.0,"uso":"SOLE SPECCHIATO","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"CR 1.74 PROGRESSIVA 2.0 HARD COLORATA","indice":1.74,"fornitore":"DAI","trattamento":"HARD","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":460.0,"uso":"SOLE","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"CR 1.74 PROGRESSIVA 2.0 DECOR INTERNO COLORATA","indice":1.74,"fornitore":"DAI","trattamento":"TOP","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":500.0,"uso":"SOLE","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"CR 1.74 PROGRESSIVA 2.0 HARD SPECCHIATA","indice":1.74,"fornitore":"DAI","trattamento":"HARD","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":510.0,"uso":"SOLE SPECCHIATO","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"CR 1.74 PROGRESSIVA 2.0 DECOR INTERNO SPECCHIATA","indice":1.74,"fornitore":"DAI","trattamento":"TOP","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":550.0,"uso":"SOLE SPECCHIATO","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"CR 1.74 PROGRESSIVA 2.0 HARD SPECCHIATA ICE","indice":1.74,"fornitore":"DAI","trattamento":"TOP","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":530.0,"uso":"SOLE SPECCHIATO","polarizza":"NO","brandPriority":3},{"tipoLente":"PROGRESSIVA","modello":"CR 1.74 PROGRESSIVA 2.0 DECOR INTERNO SPECCHIATA ICE","indice":1.74,"fornitore":"DAI","trattamento":"TOP","fotocromatico":"NO","livello":"SMART","sottoLivello":"BASSO","prezzoCoppia":570.0,"uso":"SOLE SPECCHIATO","polarizza":"NO","brandPriority":3}];
+
+var NEGOZI = {
+  'TORINO LINGOTTO':           {ind:'Via Nizza, 230 - 10126 Torino', tel:'011 1950 5285'},
+  'TORINO TODREAM':            {ind:'Corso Romania, 460 - 10156 Torino', tel:'011 569 4048'},
+  'SETTIMO CIELO RETAIL PARK': {ind:'Via Pietro Mascagni, 11 - 10036 Settimo T.se', tel:'011 020 4641'},
+  'TORINO OUTLET VILLAGE':     {ind:'Via Torino, 160 - 10036 Settimo T.se', tel:'011 896 0921'},
+  'NICHELINO I VIALI':         {ind:'Via dei Cacciatori, 111 - 10042 Nichelino', tel:'011 358 7965'},
+  'BIELLA GLI ORSI':           {ind:'Viale D. Modugno, 3B - 13900 Biella', tel:'015 253 9606'}
+};
+
+var CFG = {
+  SCARTO_MIN:50, SCARTO_IDEALE:100, SCARTO_TOP:100, MAX_EXTRA:200, VALIDITA:15,
+  LIV:{'SMART':1,'PREMIUM':2,'TOP':3,'GOLD':3,'PLATINUM':4},
+  BP:{'ESSILOR':1,'PERFETTA':2,'DAI':3}
+};
+
+var tgVals = {usoTg:'NORMALE', fotoTg:'NO'};
+
+// ============================================================
+// UTILS
+// ============================================================
+function n(v){return String(v||'').trim().toUpperCase();}
+function pn(v){
+  if(typeof v==='number')return v;
+  var s=String(v||'').replace(/[€\s]/g,'').trim();
+  // Se ha già il punto decimale e niente virgola, è già un numero decimale (es. "1.5", "1.67")
+  if(s.indexOf('.')>=0 && s.indexOf(',')<0) return parseFloat(s)||0;
+  // Formato italiano: punto come migliaia, virgola come decimale
+  return parseFloat(s.replace(/\./g,'').replace(',','.'))||0;
+}
+function fmt(v){return pn(v).toFixed(2).replace('.',',');}
+function livO(l){return CFG.LIV[n(l)]||999;}
+function slO(s){var x=n(s);if(x.includes('BASSO')||x.includes('BASIC'))return 1;if(x.includes('MEDIO'))return 2;if(x.includes('ALTO')||x.includes('GOLD'))return 3;if(x.includes('TOP'))return 4;return 0;}
+function bp(f){return CFG.BP[n(f)]||9;}
+function eq(a,b){return a&&b&&n(a.modello)===n(b.modello)&&n(a.fornitore)===n(b.fornitore)&&n(a.trattamento)===n(b.trattamento)&&pn(a.prezzoCoppia)===pn(b.prezzoCoppia);}
+
+function toast(msg,type){
+  var t=document.createElement('div');
+  t.className='toast '+(type||'info');
+  t.textContent=msg;
+  document.body.appendChild(t);
+  setTimeout(function(){t.remove();},3500);
+}
+
+// ============================================================
+// TOGGLE
+// ============================================================
+function setTg(id,btn){
+  document.getElementById(id).querySelectorAll('button').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  tgVals[id]=btn.dataset.v;
+}
+
+function aggiornaCampi(){
+  // Quando cambia tipo lente, reset uso a NORMALE
+  var usoSel = document.getElementById('usoSel');
+  if(usoSel) usoSel.value = 'NORMALE';
+  tgVals['fotoTg'] = 'NO';
+  document.getElementById('fotoTg').querySelectorAll('button').forEach(function(b){
+    b.classList.toggle('on', b.dataset.v === 'NO');
+  });
+  document.getElementById('fieldFoto').style.display = '';
+}
+
+function aggiornaFoto(){
+  var uso = document.getElementById('usoSel').value;
+  var transizioni = ['TRANSITION','TRANSITION POLARIZZATA'];
+  var isTrans = transizioni.indexOf(uso) >= 0;
+  // Se transition, nascondi fotocromatico e forza SI
+  document.getElementById('fieldFoto').style.display = isTrans ? 'none' : '';
+  if(isTrans){
+    tgVals['fotoTg'] = 'SI';
+  } else {
+    tgVals['fotoTg'] = 'NO';
+    document.getElementById('fotoTg').querySelectorAll('button').forEach(function(b){
+      b.classList.toggle('on', b.dataset.v === 'NO');
+    });
+  }
+}
+
+// ============================================================
+// FILTRO
+// ============================================================
+function filtra(input){
+  var tipo = n(input.tipo);
+  var uso = n(input.uso);
+  var foto = n(input.foto);
+  var indice = pn(input.indice);
+  var forn = n(input.fornitore);
+
+  // Transition = fotocromatico SI
+  var isTrans = uso === 'TRANSITION' || uso === 'TRANSITION POLARIZZATA';
+
+  return LISTINO.filter(function(p){
+    if(n(p.tipoLente) !== tipo) return false;
+    if(indice > 0 && p.indice > 0 && p.indice !== indice) return false;
+
+    // filtro fotocromatico
+    if(isTrans || foto === 'SI'){
+      if(n(p.fotocromatico) !== 'SI') return false;
+    } else {
+      if(n(p.fotocromatico) === 'SI') return false;
+    }
+
+    // filtro uso — deve corrispondere esattamente
+    if(uso && uso !== 'TUTTI'){
+      if(n(p.uso) !== uso) return false;
+    }
+
+    if(forn && forn !== 'TUTTI' && n(p.fornitore) !== forn) return false;
+    return true;
+  }).sort(function(a,b){
+    if(livO(a.livello) !== livO(b.livello)) return livO(a.livello) - livO(b.livello);
+    if(slO(a.sottoLivello) !== slO(b.sottoLivello)) return slO(a.sottoLivello) - slO(b.sottoLivello);
+    if(a.brandPriority !== b.brandPriority) return a.brandPriority - b.brandPriority;
+    return a.prezzoCoppia - b.prezzoCoppia;
+  });
+}
+
+
+
+// ============================================================
+// SELEZIONE PROPOSTE — logica unificata
+//
+// FORNITORE=TUTTI:
+//   SMART        = DAI più economica (stesso uso+indice)
+//   CONSIGLIATA  = PERFETTA più vicina al budget (stesso uso+indice)
+//   TOP          = ESSILOR più economica (stesso indice, qualsiasi uso compatibile)
+//                  oppure upgrade uso/indice se Essilor già nella consigliata
+//
+// FORNITORE FORZATO:
+//   SMART        = più economica del fornitore (stesso uso+indice)
+//   CONSIGLIATA  = stesso fornitore, upgrade uso (es. normale→luce blu→transition)
+//                  o versione più costosa (trattamento migliore)
+//   TOP          = stesso fornitore, upgrade ulteriore (foto/transition/indice)
+//                  o se non disponibile, fornitore superiore
+// ============================================================
+
+var GERARCHIA_FORN = ['DAI','PERFETTA','ESSILOR'];
+var GERARCHIA_USO  = {
+  'NORMALE':0,'LUCE BLU':1,'SOLE':1,'SOLE SPECCHIATO':1,
+  'SOLE POLARIZZATO':2,'TRANSITION':3,'TRANSITION POLARIZZATA':4
+};
+
+function fornRank(f){ var i=GERARCHIA_FORN.indexOf(n(f)); return i>=0?i:99; }
+function usoRank(u){ return GERARCHIA_USO[n(u)]!==undefined ? GERARCHIA_USO[n(u)] : 0; }
+
+function cheapest(lista){
+  if(!lista||!lista.length) return null;
+  return lista.slice().sort(function(a,b){ return a.prezzoCoppia-b.prezzoCoppia; })[0];
+}
+function nearBudget(lista, budget){
+  if(!lista||!lista.length) return null;
+  var ok = lista.filter(function(p){ return p.prezzoCoppia <= budget*1.1; });
+  var pool = ok.length ? ok : lista;
+  return pool.slice().sort(function(a,b){
+    return Math.abs(a.prezzoCoppia-budget) - Math.abs(b.prezzoCoppia-budget);
+  })[0];
+}
+
+function proposte(filtrati, budget, fornForzato, inputUso, inputIndice) {
+  if(!filtrati||!filtrati.length) return null;
+  var tipoLente = n(filtrati[0].tipoLente||'');
+  var indice = pn(inputIndice);
+
+  // Pool allargato per TOP Essilor (stesso tipo, indice >= richiesto, tutti gli usi)
+  var poolAmpio = LISTINO.filter(function(p){
+    if(n(p.tipoLente)!==tipoLente) return false;
+    if(indice>0 && p.indice>0 && p.indice<indice) return false;
+    return true;
+  });
+
+  var smart=null, premium=null, top=null;
+
+  // ==============================================
+  // CASO A: Fornitore = TUTTI → gerarchia DAI→PERFETTA→ESSILOR
+  // ==============================================
+  if(!fornForzato || fornForzato==='TUTTI'){
+
+    // SMART: DAI, più economica, stesso uso+indice
+    var dai = filtrati.filter(function(p){ return n(p.fornitore)==='DAI'; });
+    smart = cheapest(dai.length ? dai : filtrati);
+    if(!smart) return null;
+
+    // CONSIGLIATA: PERFETTA, più vicina al budget, stesso uso+indice
+    var perf = filtrati.filter(function(p){
+      return n(p.fornitore)==='PERFETTA' && !eq(p,smart) && p.prezzoCoppia>smart.prezzoCoppia;
+    });
+    if(perf.length){
+      premium = nearBudget(perf, budget);
+    } else {
+      // fallback: qualsiasi fornitore superiore
+      var sup = filtrati.filter(function(p){
+        return fornRank(p.fornitore)>fornRank(smart.fornitore) && !eq(p,smart) && p.prezzoCoppia>smart.prezzoCoppia;
+      });
+      premium = nearBudget(sup, budget);
+    }
+    if(premium && eq(premium,smart)) premium=null;
+
+    // TOP: ESSILOR, cerca su pool ampio (tutti gli usi compatibili, stesso indice)
+    var essilorPool = poolAmpio.filter(function(p){
+      return n(p.fornitore)==='ESSILOR' &&
+             p.prezzoCoppia > (premium||smart).prezzoCoppia &&
+             !eq(p,premium) && !eq(p,smart);
+    });
+    if(essilorPool.length){
+      top = cheapest(essilorPool);
+    }
+    // fallback top: fornitore superiore alla consigliata
+    if(!top){
+      var supTop = poolAmpio.filter(function(p){
+        var base = premium||smart;
+        return fornRank(p.fornitore)>fornRank(base.fornitore) &&
+               p.prezzoCoppia>base.prezzoCoppia &&
+               !eq(p,premium)&&!eq(p,smart);
+      });
+      top = cheapest(supTop);
+    }
+
+  // ==============================================
+  // CASO B: Fornitore forzato → upgrade interno
+  // ==============================================
+  } else {
+
+    var ff = filtrati.filter(function(p){ return n(p.fornitore)===fornForzato; });
+    var ffAmpio = poolAmpio.filter(function(p){ return n(p.fornitore)===fornForzato; });
+    var pool = ff.length ? ff : filtrati;
+
+    // SMART: più economica del fornitore, uso richiesto
+    smart = cheapest(pool);
+    if(!smart) return null;
+
+    // CONSIGLIATA: stesso fornitore + indice, upgrade uso (luce blu > normale, transition > tutto)
+    //              oppure versione più costosa (trattamento migliore) se stesso uso
+    var upUso = ffAmpio.filter(function(p){
+      return p.indice === smart.indice &&
+             usoRank(p.uso) > usoRank(smart.uso) &&
+             p.prezzoCoppia > smart.prezzoCoppia &&
+             !eq(p,smart);
+    });
+    if(upUso.length){
+      premium = cheapest(upUso);
+    } else {
+      // stesso uso, versione più costosa (trattamento migliore)
+      var sameusoMore = pool.filter(function(p){
+        return !eq(p,smart) && p.prezzoCoppia > smart.prezzoCoppia;
+      });
+      premium = nearBudget(sameusoMore, budget) || null;
+    }
+    if(premium && eq(premium,smart)) premium=null;
+
+    // TOP: upgrade ulteriore (uso ancora superiore, o indice superiore)
+    var base = premium||smart;
+
+    // 1. upgrade uso stesso fornitore+indice
+    var upUso2 = ffAmpio.filter(function(p){
+      return p.indice === base.indice &&
+             usoRank(p.uso) > usoRank(base.uso) &&
+             p.prezzoCoppia > base.prezzoCoppia &&
+             !eq(p,premium) && !eq(p,smart);
+    });
+    if(upUso2.length) top = cheapest(upUso2);
+
+    // 2. upgrade indice stesso fornitore+uso
+    if(!top){
+      var upInd = ffAmpio.filter(function(p){
+        return p.indice > base.indice &&
+               n(p.uso) === n(base.uso) &&
+               p.prezzoCoppia > base.prezzoCoppia &&
+               !eq(p,premium) && !eq(p,smart);
+      });
+      if(upInd.length) top = cheapest(upInd);
+    }
+
+    // 3. fornitore superiore stesso uso+indice
+    if(!top){
+      var supForn = poolAmpio.filter(function(p){
+        return fornRank(p.fornitore) > fornRank(fornForzato) &&
+               p.indice === base.indice &&
+               n(p.uso) === n(base.uso) &&
+               p.prezzoCoppia > base.prezzoCoppia &&
+               !eq(p,premium) && !eq(p,smart);
+      });
+      if(supForn.length) top = cheapest(supForn);
+    }
+
+    // 4. qualsiasi upgrade disponibile
+    if(!top){
+      var qualsiasi = ffAmpio.filter(function(p){
+        return p.prezzoCoppia > base.prezzoCoppia &&
+               !eq(p,premium) && !eq(p,smart);
+      });
+      if(qualsiasi.length) top = cheapest(qualsiasi);
+    }
+  }
+
+  if(top && eq(top,premium)) top=null;
+  if(top && eq(top,smart)) top=null;
+  return {smart:smart, premium:premium, top:top};
+}
+
+
+
+// ============================================================
+// DESCRIZIONI
+// ============================================================
+var DESC={
+  smart:{ico:'💰',tit:'Soluzione Smart',txt:'Visione nitida per le attività quotidiane. Ottimo equilibrio qualità-prezzo.'},
+  premium:{ico:'⭐',tit:'Soluzione Consigliata',txt:'Più comfort, più qualità. La proposta più equilibrata per il tuo stile di vita.'},
+  top:{ico:'👑',tit:'Soluzione Premium',txt:'Il massimo della tecnologia disponibile. Per chi non scende a compromessi.'}
+};
+
+// ============================================================
+// RENDER
+// ============================================================
+function renderCard(p,tipo,cons,mont,baseCard){
+  var d=DESC[tipo];
+  var tot=pn(p.prezzoCoppia)+pn(mont);
+  var r12=Math.round(tot/12);
+  var r3=fmt(tot/3);
+  var badge=cons?'<div class="pc-badge">⭐ CONSIGLIATA</div>':'';
+  var pt=cons?'padding-top:26px;':'';
+
+  // Etichetta upgrade per TOP
+  var upgradeLabel='';
+  if(tipo==='top' && baseCard){
+    if(n(p.fornitore)!==n(baseCard.fornitore)){
+      upgradeLabel='<div style="text-align:center;margin-bottom:6px;"><span style="background:#ede9fe;color:#5b21b6;font-size:9px;font-weight:800;padding:2px 10px;border-radius:12px;letter-spacing:1px;">↑ UPGRADE FORNITORE</span></div>';
+    } else if(p.indice>baseCard.indice){
+      upgradeLabel='<div style="text-align:center;margin-bottom:6px;"><span style="background:#dcfce7;color:#15803d;font-size:9px;font-weight:800;padding:2px 10px;border-radius:12px;letter-spacing:1px;">↑ INDICE SUPERIORE</span></div>';
+    } else if(usoRank(p.uso)>usoRank(baseCard.uso)){
+      upgradeLabel='<div style="text-align:center;margin-bottom:6px;"><span style="background:#fef3c7;color:#92400e;font-size:9px;font-weight:800;padding:2px 10px;border-radius:12px;letter-spacing:1px;">↑ CON FOTOCROMATICO</span></div>';
+    }
+  }
+  return '<div class="pc'+(cons?' cons':'')+'" style="'+pt+'">'
+    +badge
+    +'<div class="pc-ico">'+d.ico+'</div>'
+    +'<div class="pc-tit">'+d.tit+'</div>'
+    +upgradeLabel
+    +'<div class="pc-desc">'+d.txt+'</div>'
+    +'<div class="pc-prod">'
+    +'<div class="pc-forn">'+n(p.fornitore)+'</div>'
+    +'<div class="pc-mod">'+(p.modello||'')+'</div>'
+    +'<div class="pc-tratt">'+(p.trattamento||'')+' &nbsp;·&nbsp; Indice '+p.indice+'</div>'
+    +'</div>'
+    +'<div class="pc-pr">'
+    +'<div class="pc-sub">Lenti <strong>'+fmt(p.prezzoCoppia)+' €</strong> + Mont. <strong>'+fmt(mont)+' €</strong></div>'
+    +'<div class="pc-div"></div>'
+    +'<div class="pc-lbl">Totale</div>'
+    +'<div class="pc-tot">'+fmt(tot)+'</div>'
+    +'<div class="pc-val">EUR</div>'
+    +'<div class="pc-rate"><strong>'+r12+' €/mese</strong> × 12 PagoDil<br><strong>'+r3+' €</strong> × 3 Scalapay</div>'
+    +'</div>'
+    +'</div>';
+}
+
+// ============================================================
+// GENERA
+// ============================================================
+function genera(){
+  // leggi input
+  var input={
+    nome: document.getElementById('nomeCliente').value.trim(),
+    email: document.getElementById('email').value.trim(),
+    tel: document.getElementById('telefono').value.trim(),
+    negozio: n(document.getElementById('negozio').value),
+    tipo: n(document.getElementById('tipoLente').value),
+    uso: document.getElementById('usoSel').value,
+    foto: tgVals['fotoTg'],
+    indice: pn(document.getElementById('indice').value),
+    fornitore: n(document.getElementById('fornitore').value),
+    mont: pn(document.getElementById('montatura').value),
+    budget: pn(document.getElementById('budget').value)
+  };
+
+  // validazione
+  var ok=true;
+  ['email','telefono','negozio','tipoLente','indice'].forEach(function(id){
+    var el=document.getElementById(id);
+    var v=el?el.value.trim():'';
+    if(!v){if(el)el.classList.add('err');ok=false;}
+    else{if(el)el.classList.remove('err');}
+  });
+  if(input.budget<=0){document.getElementById('budget').classList.add('err');ok=false;}
+  if(!ok){toast('⚠️ Compila tutti i campi obbligatori','err');return;}
+
+  // filtra
+  var filtrati=filtra(input);
+  if(!filtrati.length){
+    toast('Nessun prodotto trovato — prova a cambiare i filtri','err');
+    document.getElementById('out').innerHTML='<div class="card"><div class="empty"><div class="empty-ico">😕</div><div class="empty-txt">Nessun prodotto trovato</div><div class="empty-sub">Tipo: '+input.tipo+' | Indice: '+input.indice+' | Fornitore: '+input.fornitore+'</div></div></div>';
+    return;
+  }
+
+  var prop=proposte(filtrati,input.budget,input.fornitore,input.uso,input.indice);
+  if(!prop){toast('Impossibile generare proposte','err');return;}
+
+  // date
+  var oggi=new Date();
+  var scad=new Date(oggi.getTime()+CFG.VALIDITA*86400000);
+  var fd=function(d){return d.toLocaleDateString('it-IT',{day:'2-digit',month:'2-digit',year:'numeric'});};
+  var neg=NEGOZI[input.negozio]||{ind:'',tel:''};
+
+  var cards='';
+  if(prop.smart)  cards+=renderCard(prop.smart,'smart',false,input.mont,null);
+  if(prop.premium)cards+=renderCard(prop.premium,'premium',true,input.mont,null);
+  if(prop.top)    cards+=renderCard(prop.top,'top',false,input.mont,prop.premium||prop.smart);
+
+  // Avviso budget superato
+  var warningHtml = '';
+  if(prop.smart && pn(prop.smart.prezzoCoppia) > input.budget){
+    var diff = fmt(pn(prop.smart.prezzoCoppia) - input.budget);
+    warningHtml = '<div style="background:#fff8e1;border:1.5px solid #ffe082;border-radius:8px;padding:10px 16px;margin-bottom:0;display:flex;align-items:center;gap:10px;border-left:4px solid #f59e0b;">'
+      +'<span style="font-size:20px;">⚠️</span>'
+      +'<div><div style="font-size:12px;font-weight:800;color:#92400e;">Budget superato</div>'
+      +'<div style="font-size:11px;color:#78350f;margin-top:2px;">La lente più economica disponibile per questa configurazione costa <strong>€'+fmt(prop.smart.prezzoCoppia)+'</strong>, ovvero <strong>€'+diff+' oltre il budget indicato</strong>. Valuta di modificare uso, indice o tipo lente.</div>'
+      +'</div></div>';
+  }
+
+  var html='';
+  html+='<div class="ph">';
+  html+='<div class="ph-brand">LAMA OPTICAL</div>';
+  if(input.negozio)html+='<div class="ph-neg">'+input.negozio+(neg.ind?' &nbsp;·&nbsp; '+neg.ind:'')+'</div>';
+  html+='<div class="ph-date">'+fd(oggi)+' &nbsp;·&nbsp; Valido fino al <strong>'+fd(scad)+'</strong></div>';
+  html+='</div>';
+
+  html+='<div class="pmeta">';
+  html+='<div class="pmeta-nome">Preventivo per: <span style="color:var(--accent)">'+(input.nome||'Cliente')+'</span></div>';
+  html+='<div class="pmeta-tags">';
+  html+='<span class="tag">'+input.tipo+'</span>';
+  if(input.indice>0)html+='<span class="tag">Indice '+input.indice+'</span>';
+  html+='<span class="tag">'+filtrati.length+' prodotti analizzati</span>';
+  html+='</div></div>';
+
+  if(warningHtml){
+    html+='<div style="padding:10px 16px;background:var(--bg);border-left:1px solid var(--border);border-right:1px solid var(--border);">'+warningHtml+'</div>';
+  }
+
+  html+='<div class="props">'+cards+'</div>';
+
+  html+='<div class="pfoot">';
+  html+='<div class="pag-grid">';
+  html+='<div class="pag-box"><strong>PagoDil</strong><span>Da 2 a 12 rate senza interessi</span></div>';
+  html+='<div class="pag-box"><strong>Scalapay</strong><span>3 comode rate senza interessi</span></div>';
+  html+='</div>';
+  html+='<div class="prev-actions">';
+  html+='<button class="btn-action print" onclick="window.print()">🖨️ Stampa / PDF</button>';
+  html+='<button class="btn-action mail" onclick="inviaMail()">✉️ Invia al Cliente</button>';
+  html+='</div>';
+  html+='<div class="pval">Preventivo valido '+CFG.VALIDITA+' giorni &nbsp;·&nbsp; Prezzi IVA inclusa</div>';
+  html+='</div>';
+
+  document.getElementById('out').innerHTML=html;
+  document.getElementById('out').scrollIntoView({behavior:'smooth',block:'start'});
+  toast('✅ Preventivo generato — '+filtrati.length+' prodotti trovati','ok');
+
+  // salva in archivio
+  salvaArchivio(input, prop);
+}
+// ============================================================
+// SUPABASE CONFIG
+// ============================================================
+var SUPABASE_URL  = 'https://wzhrvouvqkesuzzxeqsg.supabase.co';
+var SUPABASE_KEY  = 'sb_publishable_L0XqfhISjJqbZtA5A6NK2A__cvw5DlN';
+
+function sbFetch(path, options) {
+  var opts = options || {};
+  opts.headers = Object.assign({
+    'apikey': SUPABASE_KEY,
+    'Authorization': 'Bearer ' + SUPABASE_KEY,
+    'Content-Type': 'application/json',
+    'Prefer': 'return=minimal'
+  }, opts.headers || {});
+  return fetch(SUPABASE_URL + '/rest/v1/' + path, opts);
+}
+
+// Carica listino da Supabase all'avvio
+function caricaListinoDaSupabase() {
+  var st = document.getElementById('listinoStatus');
+  if(st){ st.textContent = '⏳ Caricamento listino...'; st.className = 'badge empty'; }
+
+  sbFetch('listino?select=*&limit=2000')
+    .then(function(r){ return r.json(); })
+    .then(function(rows){
+      if(!Array.isArray(rows) || rows.length === 0){
+        if(st){ st.textContent = LISTINO.length + ' prodotti (locale)'; st.className = 'badge ok'; }
+        return;
+      }
+      // Mappa colonne Supabase → formato app
+      LISTINO = rows.map(function(p){
+        var forn = n(p.FORNITORE || p.fornitore || '');
+        var bp = {'ESSILOR':1,'PERFETTA':2,'DAI':3}[forn] || 9;
+        var modello = String(p.NOME || p.nome || p.MODELLO || p.modello || '').trim();
+        var indiceNum = parseFloat(String(p.INDICE || p.indice || '0').replace(',','.')) || 0;
+        if(!indiceNum){
+          var m = modello.match(/1[.,][567][0-9]?/);
+          if(m) indiceNum = parseFloat(m[0].replace(',','.'));
+        }
+        return {
+          tipoLente:    n(p.TIPO || p.tipo || ''),
+          modello:      modello,
+          indice:       indiceNum,
+          fornitore:    forn,
+          trattamento:  String(p.TRATTAMENTO || p.trattamento || '').trim(),
+          fotocromatico:n(p.FOTOCROMATICO || p.fotocromatico || 'NO'),
+          livello:      n(p.LIVELLO || p.livello || ''),
+          sottoLivello: String(p['SOTTO LIVELLO'] || p.sotto_livello || p.sottolivello || '').trim(),
+          prezzoCoppia: parseFloat(String(p.COSTO || p.costo || p.PREZZO || p.prezzo || '0').replace(',','.')) || 0,
+          uso:          n(p.USO || p.uso || 'NORMALE'),
+          polarizza:    n(p.POLARIZZATO || p.polarizzato || p.POLARIZZA || 'NO'),
+          brandPriority:bp
+        };
+      }).filter(function(p){ return p.tipoLente && p.modello && p.prezzoCoppia > 0; });
+
+      if(st){ st.textContent = LISTINO.length + ' prodotti (Supabase)'; st.className = 'badge ok'; }
+      toast('✅ Listino da Supabase: ' + LISTINO.length + ' prodotti', 'ok');
+    })
+    .catch(function(err){
+      console.warn('Supabase listino error:', err);
+      if(st){ st.textContent = LISTINO.length + ' prodotti (locale)'; st.className = 'badge ok'; }
+    });
+}
+
+// Salva preventivo su Supabase
+function salvasuSupabase(entry) {
+  var row = {
+    data:         entry.data,
+    ora:          entry.ora,
+    nome_cliente: entry.nome,
+    email:        entry.email,
+    telefono:     entry.telefono,
+    negozio:      entry.negozio,
+    tipo_lente:   entry.tipo,
+    uso:          entry.uso,
+    indice:       entry.indice,
+    montatura:    entry.montatura,
+    smart_forn:   entry.smart   ? n(entry.smart.forn)    : null,
+    smart_mod:    entry.smart   ? entry.smart.mod         : null,
+    smart_lenti:  entry.smart   ? entry.smart.prezzo      : null,
+    smart_tot:    entry.smart   ? entry.smart.tot         : null,
+    prem_forn:    entry.premium ? n(entry.premium.forn)   : null,
+    prem_mod:     entry.premium ? entry.premium.mod       : null,
+    prem_lenti:   entry.premium ? entry.premium.prezzo    : null,
+    prem_tot:     entry.premium ? entry.premium.tot       : null,
+    top_forn:     entry.top     ? n(entry.top.forn)       : null,
+    top_mod:      entry.top     ? entry.top.mod           : null,
+    top_lenti:    entry.top     ? entry.top.prezzo        : null,
+    top_tot:      entry.top     ? entry.top.tot           : null,
+    scelta:       ''
+  };
+
+  sbFetch('preventivi', {
+    method: 'POST',
+    headers: { 'Prefer': 'return=minimal' },
+    body: JSON.stringify(row)
+  }).catch(function(err){ console.warn('Supabase preventivo error:', err); });
+}
+
+// Mantieni GAS come fallback (compatibilità)
+var GAS_URL = '';
+function salvasuGAS(entry) {}
+
+
+
+var _ultimoInput = null;
+var _ultimoProp = null;
+
+// ============================================================
+// NAVIGAZIONE PAGINE
+// ============================================================
+function showPage(nome){
+  document.getElementById('pagePreventivo').classList.toggle('active', nome==='preventivo');
+  document.getElementById('pageArchivio').classList.toggle('active', nome==='archivio');
+  document.querySelectorAll('.nav-btn').forEach(function(b,i){
+    b.classList.toggle('active', (nome==='preventivo'&&i===0)||(nome==='archivio'&&i===1));
+  });
+  if(nome==='archivio') renderArchivio();
+}
+
+// ============================================================
+// INVIA MAIL
+// ============================================================
+function inviaMail(){
+  if(!_ultimoInput||!_ultimoInput.email){toast('Nessun preventivo generato o email mancante','err');return;}
+  var i=_ultimoInput, p=_ultimoProp;
+  var neg=NEGOZI[i.negozio]||{};
+  var oggi=new Date().toLocaleDateString('it-IT');
+  var scad=new Date(Date.now()+CFG.VALIDITA*86400000).toLocaleDateString('it-IT');
+
+  var riga=function(label,prod,mont){
+    if(!prod)return '';
+    var tot=pn(prod.prezzoCoppia)+pn(mont);
+    return label+': '+n(prod.fornitore)+' '+prod.modello+' — Lenti '+fmt(prod.prezzoCoppia)+' + Mont. '+fmt(mont)+' = EUR '+fmt(tot)+'\r\n';
+  };
+
+  var body='Gentile '+(i.nome||'Cliente')+',\r\n\r\n'
+    +'Le inviamo il preventivo personalizzato preparato presso LAMA OPTICAL '+i.negozio+'.\r\n\r\n'
+    +'--- DETTAGLIO PREVENTIVO ---\r\n'
+    +'Data: '+oggi+' | Valido fino al: '+scad+'\r\n'
+    +'Tipo lente: '+i.tipo+' | Uso: '+i.uso+' | Indice: '+i.indice+'\r\n\r\n'
+    +riga('💰 Smart',p.smart,i.mont)
+    +riga('⭐ Consigliata',p.premium,i.mont)
+    +riga('👑 Premium',p.top,i.mont)
+    +'\r\n--- PAGAMENTI ---\r\n'
+    +'PagoDil: da 2 a 12 rate senza interessi\r\n'
+    +'Scalapay: 3 rate senza interessi\r\n\r\n'
+    +'Per informazioni o per fissare un appuntamento:\r\n'
+    +(neg.tel?'Tel: '+neg.tel+'\r\n':'')
+    +'\r\nA presto,\r\nLAMA OPTICAL — '+i.negozio;
+
+  var subject='Il tuo preventivo LAMA OPTICAL — '+oggi;
+  var mailto='mailto:'+encodeURIComponent(i.email)
+    +'?subject='+encodeURIComponent(subject)
+    +'&body='+encodeURIComponent(body);
+
+  window.location.href=mailto;
+  toast('✉️ Client email aperto','ok');
+}
+
+// ============================================================
+// ARCHIVIO
+// ============================================================
+function salvaArchivio(input, prop){
+  _ultimoInput=input;
+  _ultimoProp=prop;
+
+  var archivio=JSON.parse(localStorage.getItem('lamaArchivio')||'[]');
+  var entry={
+    id: Date.now(),
+    data: new Date().toLocaleDateString('it-IT'),
+    ora: new Date().toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'}),
+    nome: input.nome||'',
+    email: input.email||'',
+    telefono: input.tel||'',
+    negozio: input.negozio||'',
+    tipo: input.tipo||'',
+    uso: input.uso||'',
+    indice: input.indice||'',
+    smart:   prop.smart   ? {forn:prop.smart.fornitore,   mod:prop.smart.modello,   prezzo:prop.smart.prezzoCoppia,   tot:pn(prop.smart.prezzoCoppia)+pn(input.mont)}   : null,
+    premium: prop.premium ? {forn:prop.premium.fornitore, mod:prop.premium.modello, prezzo:prop.premium.prezzoCoppia, tot:pn(prop.premium.prezzoCoppia)+pn(input.mont)} : null,
+    top:     prop.top     ? {forn:prop.top.fornitore,     mod:prop.top.modello,     prezzo:prop.top.prezzoCoppia,     tot:pn(prop.top.prezzoCoppia)+pn(input.mont)}     : null,
+    montatura: input.mont||0,
+    scelta: ''
+  };
+  archivio.unshift(entry);
+  localStorage.setItem('lamaArchivio', JSON.stringify(archivio));
+  aggiornaContatore();
+
+  // Sync Supabase
+  salvasuSupabase(entry);
+}
+
+function aggiornaContatore(){
+  var archivio=JSON.parse(localStorage.getItem('lamaArchivio')||'[]');
+  var el=document.getElementById('archCount');
+  if(el) el.textContent=archivio.length>0?'('+archivio.length+')':'';
+}
+
+function renderArchivio(){
+  var archivio=JSON.parse(localStorage.getItem('lamaArchivio')||'[]');
+  var el=document.getElementById('archivioContent');
+  if(!archivio.length){
+    el.innerHTML='<div class="arch-empty"><div class="arch-empty-ico">📋</div><div>Nessun preventivo salvato</div></div>';
+    return;
+  }
+
+  var html='<div class="arch-table-wrap"><table class="arch">'
+    +'<thead><tr>'
+    +'<th>Data/Ora</th><th>Cliente</th><th>Negozio</th><th>Prescrizione</th>'
+    +'<th>Smart</th><th>Consigliata</th><th>Premium</th>'
+    +'<th>Scelta</th><th></th>'
+    +'</tr></thead><tbody>';
+
+  archivio.forEach(function(r){
+    var prodCell=function(p){
+      if(!p) return '<td><span style="color:var(--sec);font-size:11px;">—</span></td>';
+      return '<td><div class="arch-prezzo">€'+fmt(p.tot)+'</div><div class="arch-sub">'+n(p.forn)+' · €'+fmt(p.prezzo)+'</div></td>';
+    };
+    var sceltaBadge={'smart':'smart','consigliata':'premium','top':'top','':''};
+    html+='<tr>'
+      +'<td><div style="font-weight:700;font-size:12px;">'+r.data+'</div><div class="arch-sub">'+r.ora+'</div></td>'
+      +'<td><div class="arch-cliente">'+(r.nome||'—')+'</div><div class="arch-sub">'+(r.email||'')+(r.telefono?' · '+r.telefono:'')+'</div></td>'
+      +'<td style="font-size:11px;">'+(r.negozio||'—')+'</td>'
+      +'<td><div style="font-size:11px;font-weight:700;">'+r.tipo+'</div><div class="arch-sub">Ind.'+r.indice+' · '+r.uso+'</div></td>'
+      +prodCell(r.smart)+prodCell(r.premium)+prodCell(r.top)
+      +'<td><select class="scelta-sel" onchange="aggiornaScelta('+r.id+',this.value)">'
+      +'<option value="" '+(r.scelta===''?'selected':'')+'>—</option>'
+      +'<option value="smart" '+(r.scelta==='smart'?'selected':'')+'>💰 Smart</option>'
+      +'<option value="consigliata" '+(r.scelta==='consigliata'?'selected':'')+'>⭐ Consigliata</option>'
+      +'<option value="top" '+(r.scelta==='top'?'selected':'')+'>👑 Premium</option>'
+      +'</select></td>'
+      +'<td style="white-space:nowrap;">'
+      +(r.email?'<button class="btn-mail-arch" title="Invia mail" onclick="inviaMailArchivio('+r.id+')">✉️</button>':'')
+      +'<button class="btn-del-arch" title="Elimina" onclick="eliminaRecord('+r.id+')">🗑</button>'
+      +'</td>'
+      +'</tr>';
+  });
+
+  html+='</tbody></table></div>';
+  el.innerHTML=html;
+}
+
+function aggiornaScelta(id, scelta){
+  var archivio=JSON.parse(localStorage.getItem('lamaArchivio')||'[]');
+  archivio=archivio.map(function(r){ if(r.id===id) r.scelta=scelta; return r; });
+  localStorage.setItem('lamaArchivio',JSON.stringify(archivio));
+}
+
+function eliminaRecord(id){
+  var archivio=JSON.parse(localStorage.getItem('lamaArchivio')||'[]');
+  archivio=archivio.filter(function(r){ return r.id!==id; });
+  localStorage.setItem('lamaArchivio',JSON.stringify(archivio));
+  renderArchivio();
+  aggiornaContatore();
+  toast('Record eliminato','info');
+}
+
+function inviaMailArchivio(id){
+  var archivio=JSON.parse(localStorage.getItem('lamaArchivio')||'[]');
+  var r=archivio.find(function(x){ return x.id===id; });
+  if(!r||!r.email){toast('Email non disponibile','err');return;}
+  var neg=NEGOZI[r.negozio]||{};
+  var riga=function(label,p){
+    if(!p)return '';
+    return label+': '+n(p.forn)+' '+p.mod+' — Lenti €'+fmt(p.prezzo)+' + Mont. €'+fmt(r.montatura)+' = €'+fmt(p.tot)+'\r\n';
+  };
+  var body='Gentile '+(r.nome||'Cliente')+',\r\n\r\n'
+    +'Preventivo del '+r.data+' — Valido 15 giorni\r\n'
+    +'Tipo: '+r.tipo+' | Uso: '+r.uso+' | Indice: '+r.indice+'\r\n\r\n'
+    +riga('💰 Smart',r.smart)+riga('⭐ Consigliata',r.premium)+riga('👑 Premium',r.top)
+    +'\r\nPagoDil (fino a 12 rate) · Scalapay (3 rate)\r\n'
+    +(neg.tel?'\r\nTel: '+neg.tel:'')
+    +'\r\nA presto,\r\nLAMA OPTICAL — '+r.negozio;
+  window.location.href='mailto:'+encodeURIComponent(r.email)
+    +'?subject='+encodeURIComponent('Il tuo preventivo LAMA OPTICAL')
+    +'&body='+encodeURIComponent(body);
+}
+
+function svuotaArchivio(){
+  if(!confirm('Svuotare tutto l\'archivio? Operazione non reversibile.')) return;
+  localStorage.removeItem('lamaArchivio');
+  renderArchivio();
+  aggiornaContatore();
+  toast('Archivio svuotato','info');
+}
+
+function esportaCSV(){
+  var archivio=JSON.parse(localStorage.getItem('lamaArchivio')||'[]');
+  if(!archivio.length){toast('Archivio vuoto','err');return;}
+  var header='Data;Ora;Nome;Email;Telefono;Negozio;Tipo;Uso;Indice;Montatura;'
+    +'Smart Forn;Smart Mod;Smart Lenti;Smart Totale;'
+    +'Cons Forn;Cons Mod;Cons Lenti;Cons Totale;'
+    +'Top Forn;Top Mod;Top Lenti;Top Totale;'
+    +'Scelta';
+  var rows=archivio.map(function(r){
+    var c=function(p){ return p?[n(p.forn),p.mod,fmt(p.prezzo),fmt(p.tot)].join(';'):';;;'; };
+    return [r.data,r.ora,r.nome,r.email,r.telefono,r.negozio,r.tipo,r.uso,r.indice,fmt(r.montatura),
+            c(r.smart),c(r.premium),c(r.top),r.scelta].join(';');
+  });
+  var csv='\uFEFF'+header+'\n'+rows.join('\n');
+  var blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  a.href=url;
+  a.download='LamaOptical_Archivio_'+new Date().toLocaleDateString('it-IT').replace(/\//g,'-')+'.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('CSV esportato','ok');
+}
+
+// init contatore al caricamento
+window.addEventListener('DOMContentLoaded', function(){
+  aggiornaContatore();
+  // Carica GAS URL salvato (legacy)
+  var savedUrl = localStorage.getItem('lamaGasUrl') || '';
+  if (savedUrl) {
+    GAS_URL = savedUrl;
+    var el = document.getElementById('gasUrlInput');
+    if (el) el.value = savedUrl;
+  }
+  // Carica listino da Supabase
+  caricaListinoDaSupabase();
+});
+
+function caricaListinoDaGAS(url) {
+  if (!url) return;
+  var st = document.getElementById('listinoStatus');
+  if (st) { st.textContent = '⏳ Aggiornamento listino...'; st.className = 'badge empty'; }
+
+  fetch(url + '?action=listino')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      if (data.ok && data.prodotti && data.prodotti.length > 0) {
+        LISTINO = data.prodotti;
+        if (st) { st.textContent = LISTINO.length + ' prodotti (aggiornati)'; st.className = 'badge ok'; }
+        toast('✅ Listino aggiornato da Google Sheets: ' + LISTINO.length + ' prodotti', 'ok');
+      } else {
+        // GAS risponde ma nessun prodotto — mantieni listino hardcoded
+        if (st) { st.textContent = LISTINO.length + ' prodotti (locale)'; st.className = 'badge ok'; }
+        if(data.error) toast('⚠️ GAS: ' + data.error + ' — uso listino locale', 'info');
+      }
+    })
+    .catch(function(){
+      // Rete non disponibile o file locale — usa listino hardcoded silenziosamente
+      if (st) { st.textContent = LISTINO.length + ' prodotti (locale)'; st.className = 'badge ok'; }
+    });
+}
+
+function salvaGasUrl() {
+  var val = (document.getElementById('gasUrlInput').value || '').trim();
+  GAS_URL = val;
+  localStorage.setItem('lamaGasUrl', val);
+  if (val) {
+    caricaListinoDaGAS(val);
+    toast('✅ URL salvato — caricamento listino in corso...', 'ok');
+  } else {
+    toast('URL rimosso', 'info');
+  }
+}
+
+function testGasUrl() {
+  var url = (document.getElementById('gasUrlInput').value || '').trim();
+  if (!url) { toast('Inserisci prima l\'URL', 'err'); return; }
+  fetch(url, {mode:'no-cors'})
+    .then(function(){ toast('✅ Connessione OK — GAS raggiungibile', 'ok'); })
+    .catch(function(){ toast('❌ Errore connessione — controlla l\'URL', 'err'); });
+}
+
+</script>
+</body>
+</html>
